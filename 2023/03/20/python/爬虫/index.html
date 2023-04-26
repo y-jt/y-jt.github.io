@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="通过python爬取豆瓣网top250的电影信息，熟悉爬虫的实现原理与过程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="爬取豆瓣top250">
+<meta property="og:url" content="https://github.com/y-jt/y-jt.github.io/2023/03/20/python/%E7%88%AC%E8%99%AB/index.html">
+<meta property="og:site_name" content="得鹿梦鱼">
+<meta property="og:description" content="通过python爬取豆瓣网top250的电影信息，熟悉爬虫的实现原理与过程。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2023/03/20/python/%E7%88%AC%E8%99%AB/1657525467851.png">
+<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2023/03/20/python/%E7%88%AC%E8%99%AB/1657525695322.png">
+<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2023/03/20/python/%E7%88%AC%E8%99%AB/1657525905894.png">
+<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2023/03/20/python/%E7%88%AC%E8%99%AB/1657526025951.png">
+<meta property="article:published_time" content="2023-03-20T02:32:50.000Z">
+<meta property="article:modified_time" content="2023-03-20T02:53:19.337Z">
+<meta property="article:author" content="小袁">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="爬虫">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/y-jt/y-jt.github.io/2023/03/20/python/%E7%88%AC%E8%99%AB/1657525467851.png">
+
+
+<link rel="canonical" href="https://github.com/y-jt/y-jt.github.io/2023/03/20/python/%E7%88%AC%E8%99%AB/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://github.com/y-jt/y-jt.github.io/2023/03/20/python/%E7%88%AC%E8%99%AB/","path":"2023/03/20/python/爬虫/","title":"爬取豆瓣top250"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>爬取豆瓣top250 | 得鹿梦鱼</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">得鹿梦鱼</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%88%AC%E8%99%AB"><span class="nav-number">1.</span> <span class="nav-text">爬虫</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">1.1.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">正则表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">1.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E4%BB%A3%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">测试代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">2.1.</span> <span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E5%9D%80%E8%AE%BF%E9%97%AEget%E8%AF%B7%E6%B1%82"><span class="nav-number">2.2.</span> <span class="nav-text">网址访问get请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Excel%E8%A1%A8%E6%A0%BC%E5%88%9B%E5%BB%BA%E5%86%99%E5%85%A5"><span class="nav-number">2.3.</span> <span class="nav-text">Excel表格创建写入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F-1"><span class="nav-number">2.4.</span> <span class="nav-text">正则表达式</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="小袁"
+      src="/images/1.png">
+  <p class="site-author-name" itemprop="name">小袁</p>
+  <div class="site-description" itemprop="description">笔记是记忆的痕迹</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/y-jt" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;y-jt"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.apiref.com/" title="https:&#x2F;&#x2F;www.apiref.com&#x2F;" rel="noopener" target="_blank">编程API手册</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://labs.openai.com/" title="https:&#x2F;&#x2F;labs.openai.com&#x2F;" rel="noopener" target="_blank">AI绘图</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://github.com/y-jt/y-jt.github.io/2023/03/20/python/%E7%88%AC%E8%99%AB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.png">
+      <meta itemprop="name" content="小袁">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="得鹿梦鱼">
+      <meta itemprop="description" content="笔记是记忆的痕迹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="爬取豆瓣top250 | 得鹿梦鱼">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          爬取豆瓣top250
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-03-20 10:32:50 / 修改时间：10:53:19" itemprop="dateCreated datePublished" datetime="2023-03-20T10:32:50+08:00">2023-03-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>通过python爬取豆瓣网top250的电影信息，熟悉爬虫的实现原理与过程。</p>
+<span id="more"></span>
+
+<h2 id="爬虫"><a href="#爬虫" class="headerlink" title="爬虫"></a>爬虫</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>就是模拟浏览器访问网址，并将有用的数据保存到本地数据库。</p>
+<p>headers是浏览器向服务器发送的消息。包括：response headers即服务器地址访问时间等等。cookie：浏览器访问记录、登录信息等，若访问需要登录的网站可以修改cookie而不登录访问。 </p>
+<p>User-Agent：包含计算机、浏览器版本信息等。</p>
+<p>计算机网络，html，json，数据库。</p>
+<h3 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h3><p><img src="/y-jt/y-jt.github.io/2023/03/20/python/%E7%88%AC%E8%99%AB/1657525467851.png" alt="1657525467851"></p>
+<p><img src="/y-jt/y-jt.github.io/2023/03/20/python/%E7%88%AC%E8%99%AB/1657525695322.png" alt="1657525695322"></p>
+<p><img src="/y-jt/y-jt.github.io/2023/03/20/python/%E7%88%AC%E8%99%AB/1657525905894.png" alt="1657525905894"></p>
+<p><img src="/y-jt/y-jt.github.io/2023/03/20/python/%E7%88%AC%E8%99%AB/1657526025951.png" alt="1657526025951"></p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#-*- codeing = utf-8 -*-</span></span><br><span class="line"><span class="comment">#@Time:2022.7.10</span></span><br><span class="line"><span class="comment">#@Author:涛</span></span><br><span class="line"><span class="comment">#@File:spider_douban</span></span><br><span class="line"><span class="comment">#@Software:jupyter notebook</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup      <span class="comment">#网页及解析，获取数据</span></span><br><span class="line"><span class="keyword">import</span> re       <span class="comment">#正则表达式，进行文字匹配</span></span><br><span class="line"><span class="keyword">import</span> urllib   <span class="comment">#制定url，获取网页数据</span></span><br><span class="line"><span class="keyword">import</span> xlwt     <span class="comment">#进行excel操作</span></span><br><span class="line"><span class="keyword">import</span> sqlite3  <span class="comment">#进行sqlite数据库操作</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#正则表达式的全局变量，&#x27;&#x27;号中间（）号中的内容即是所需要的内容</span></span><br><span class="line">findlink = re.<span class="built_in">compile</span>(<span class="string">r&#x27;&lt;a href=&quot;(.*?)&quot;&gt;&#x27;</span>)<span class="comment">#影片详情链接的正则表达式</span></span><br><span class="line">findImgSrc = re.<span class="built_in">compile</span>(<span class="string">r&#x27;&lt;img.*src=&quot;(.*?)&quot;&#x27;</span>,re.S) <span class="comment">#re.S让换行符包含在字符中</span></span><br><span class="line">findTitle = re.<span class="built_in">compile</span>(<span class="string">r&#x27;&lt;span class=&quot;title&quot;&gt;(.*)&lt;/span&gt;&#x27;</span>)</span><br><span class="line">findRating = re.<span class="built_in">compile</span>(<span class="string">r&#x27;&lt;span class=&quot;rating_num&quot; property=&quot;v:average&quot;&gt;(.*)&lt;/span&gt;&#x27;</span>)</span><br><span class="line">findJudge = re.<span class="built_in">compile</span>(<span class="string">r&#x27;&lt;span&gt;(\d*)人评价&lt;/span&gt;&#x27;</span>)</span><br><span class="line">findInq = re.<span class="built_in">compile</span>(<span class="string">r&#x27;&lt;span class=&quot;inq&quot;&gt;(.*)&lt;/span&gt;&#x27;</span>)<span class="comment">#概述</span></span><br><span class="line">findBd = re.<span class="built_in">compile</span>(<span class="string">r&#x27;&lt;p class=&quot;&quot;&gt;(.*?)&lt;/p&gt;&#x27;</span>,re.S)<span class="comment">#详细信息</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    baseurl = <span class="string">&quot;https://movie.douban.com/top250?start=&quot;</span></span><br><span class="line">    datalist = getData(baseurl)</span><br><span class="line">    <span class="comment">#savepath = &quot;豆瓣电影Top250.xls&quot;</span></span><br><span class="line">    <span class="comment">#saveData(datalist,savepath)</span></span><br><span class="line">    </span><br><span class="line">    dbpath = <span class="string">&quot;movie.db&quot;</span></span><br><span class="line">    saveDataDb(datalist,dbpath)</span><br><span class="line">    print_movie_db(dbpath)</span><br><span class="line"></span><br><span class="line"><span class="comment">#爬取网页</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">getData</span>(<span class="params">baseurl</span>):</span><br><span class="line">    datalist = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="number">10</span>):</span><br><span class="line">        url = baseurl + <span class="built_in">str</span>(i*<span class="number">25</span>)</span><br><span class="line">        html = askURL(url)</span><br><span class="line">        <span class="comment">#逐一解析数据</span></span><br><span class="line">        soup = BeautifulSoup(html,<span class="string">&quot;html.parser&quot;</span>)</span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> soup.find_all(<span class="string">&#x27;div&#x27;</span>,class_=<span class="string">&quot;item&quot;</span>):<span class="comment">#查找符合要求的字符串，形成列表</span></span><br><span class="line">            <span class="comment">#print(item)</span></span><br><span class="line">            data = []</span><br><span class="line">            item = <span class="built_in">str</span>(item)<span class="comment">#转为字符串使用re正则表达式查找</span></span><br><span class="line">            <span class="comment">#在所有字符串中 找到满足要求的  影片详情链接</span></span><br><span class="line">            link = re.findall(findlink,item)[<span class="number">0</span>]<span class="comment">#findall 找到所有的，并保留第一个</span></span><br><span class="line">            data.append(link)</span><br><span class="line">            </span><br><span class="line">            imgSrc = re.findall(findImgSrc,item)[<span class="number">0</span>]</span><br><span class="line">            data.append(imgSrc)</span><br><span class="line">            </span><br><span class="line">            title = re.findall(findTitle,item)<span class="comment">#片名会有外国名  分别保存</span></span><br><span class="line">            <span class="keyword">if</span>(<span class="built_in">len</span>(title)==<span class="number">2</span>):</span><br><span class="line">                ctitle = title[<span class="number">0</span>]</span><br><span class="line">                data.append(ctitle)</span><br><span class="line">                otitle = title[<span class="number">1</span>].replace(<span class="string">&quot;/&quot;</span>,<span class="string">&quot;&quot;</span>)<span class="comment">#外国名 前面有一个/需要去掉，replace就是用后一个代替前一个</span></span><br><span class="line">                data.append(otitle)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                data.append(title[<span class="number">0</span>])</span><br><span class="line">                data.append(<span class="string">&#x27; &#x27;</span>)        <span class="comment">#如果没有外国名，就将名字留空，不然表格会乱            </span></span><br><span class="line">            </span><br><span class="line">            Rating = re.findall(findRating,item)[<span class="number">0</span>]</span><br><span class="line">            data.append(Rating)</span><br><span class="line">            </span><br><span class="line">            Judge = re.findall(findJudge,item)[<span class="number">0</span>]</span><br><span class="line">            data.append(Judge)</span><br><span class="line">            </span><br><span class="line">            Inq = re.findall(findInq,item)   <span class="comment">#概述可能没有</span></span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">len</span>(Inq) != <span class="number">0</span>:</span><br><span class="line">                Inq= Inq[<span class="number">0</span>].replace(<span class="string">&quot;。&quot;</span>,<span class="string">&quot; &quot;</span>)</span><br><span class="line">                data.append(Inq)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                data.append(<span class="string">&quot; &quot;</span>)</span><br><span class="line">            </span><br><span class="line">            Bd = re.findall(findBd,item)[<span class="number">0</span>]</span><br><span class="line">            Bd = re.sub(<span class="string">&#x27;&lt;br(\s+)?/&gt;(\s+)?&#x27;</span>,<span class="string">&quot; &quot;</span>,Bd)  <span class="comment">#替换没必要的内容</span></span><br><span class="line">            Bd = re.sub(<span class="string">&#x27;/&#x27;</span>,<span class="string">&quot; &quot;</span>,Bd)</span><br><span class="line">            Bd = Bd.strip()<span class="comment">#  strip 去掉空格</span></span><br><span class="line">            data.append(Bd)</span><br><span class="line">            datalist.append(data)</span><br><span class="line">    <span class="keyword">return</span> datalist</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="comment">#用户代理，告诉服务器我们能接受  解析什么样的数据</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">askURL</span>(<span class="params">url</span>):</span><br><span class="line">    head = &#123;<span class="comment">#模拟浏览器头部信息，向豆瓣服务器发送消息。</span></span><br><span class="line">        <span class="string">&quot;User-Agent&quot;</span>: <span class="string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36 Edg/103.0.1264.49&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">    request = urllib.request.Request(url,headers=head)</span><br><span class="line">    html = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        response = urllib.request.urlopen(request)</span><br><span class="line">        html = response.read().decode(<span class="string">&quot;utf-8&quot;</span>)</span><br><span class="line">        <span class="comment">#print(html)</span></span><br><span class="line">    <span class="keyword">except</span> urllib.error.URLError <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">hasattr</span>(e,<span class="string">&quot;code&quot;</span>):</span><br><span class="line">            <span class="built_in">print</span>(e.code)</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">hasattr</span>(e,<span class="string">&quot;reason&quot;</span>):</span><br><span class="line">            <span class="built_in">print</span>(e.reason)</span><br><span class="line">    <span class="keyword">return</span> html</span><br><span class="line">    </span><br><span class="line"><span class="comment">#保存数据</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">saveData</span>(<span class="params">datalist,savepath</span>):</span><br><span class="line">    book = xlwt.Workbook(encoding=<span class="string">&quot;utf-8&quot;</span>,style_compression=<span class="number">0</span>)</span><br><span class="line">    sheet = book.add_sheet(<span class="string">&#x27;豆瓣电影top250&#x27;</span>,cell_overwrite_ok=<span class="literal">True</span>)</span><br><span class="line">    col=(<span class="string">&quot;电影详情链接&quot;</span>,<span class="string">&quot;图片链接&quot;</span>,<span class="string">&quot;影片中文名&quot;</span>,<span class="string">&quot;影片外国名&quot;</span>,<span class="string">&quot;评分&quot;</span>,<span class="string">&quot;评分人数&quot;</span>,<span class="string">&quot;概述&quot;</span>,<span class="string">&quot;相关信息&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="number">8</span>):</span><br><span class="line">        sheet.write(<span class="number">0</span>,i,col[i])</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="number">250</span>):</span><br><span class="line">        <span class="comment">#print(&#x27;第%d条&#x27;%(i))</span></span><br><span class="line">        data = datalist[i]</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="number">8</span>):</span><br><span class="line">            sheet.write(i+<span class="number">1</span>,j,data[j])</span><br><span class="line">    book.save(savepath)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">saveDataDb</span>(<span class="params">datalist,dbpath</span>):</span><br><span class="line">    init_db(dbpath)</span><br><span class="line">    conn = sqlite3.connect(dbpath)</span><br><span class="line">    cur = conn.cursor()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> data <span class="keyword">in</span> datalist:</span><br><span class="line">        <span class="keyword">for</span> index <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(data)):</span><br><span class="line">            <span class="keyword">if</span> index == <span class="number">4</span> <span class="keyword">or</span> index == <span class="number">5</span>:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            data[index] = <span class="string">&#x27;&quot;&#x27;</span>+data[index]+<span class="string">&#x27;&quot;&#x27;</span></span><br><span class="line">        sql=<span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">            insert into movie250(</span></span><br><span class="line"><span class="string">            info_link,pic_link,cname,ename,score,rated,instroduction,info)</span></span><br><span class="line"><span class="string">            values(%s)</span></span><br><span class="line"><span class="string">            &#x27;&#x27;&#x27;</span>%<span class="string">&quot;,&quot;</span>.join(data)<span class="comment">#用，将字符串分割</span></span><br><span class="line">        <span class="comment">#print(sql)</span></span><br><span class="line">        cur.execute(sql)</span><br><span class="line">        conn.commit()</span><br><span class="line">    cur.close()</span><br><span class="line">    conn.close()</span><br><span class="line">            </span><br><span class="line"><span class="comment">#数据库建表</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">init_db</span>(<span class="params">dbpath</span>):</span><br><span class="line">    sql = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">        create table movie250</span></span><br><span class="line"><span class="string">        (</span></span><br><span class="line"><span class="string">        id integer primary key autoincrement,</span></span><br><span class="line"><span class="string">        info_link text,</span></span><br><span class="line"><span class="string">        pic_link text,</span></span><br><span class="line"><span class="string">        cname varchar,</span></span><br><span class="line"><span class="string">        ename varchar,</span></span><br><span class="line"><span class="string">        score numeric,</span></span><br><span class="line"><span class="string">        rated numeric,</span></span><br><span class="line"><span class="string">        instroduction text,</span></span><br><span class="line"><span class="string">        info text</span></span><br><span class="line"><span class="string">        )</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    &#x27;&#x27;&#x27;</span></span><br><span class="line">    conn = sqlite3.connect(dbpath)</span><br><span class="line">    cursor = conn.cursor()</span><br><span class="line">    cursor.execute(sql)</span><br><span class="line">    conn.commit()</span><br><span class="line">    conn.close()</span><br><span class="line">    </span><br><span class="line"><span class="comment">#查看数据库</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">print_movie_db</span>(<span class="params">dbpath</span>):</span><br><span class="line">    conn = sqlite3.connect(dbpath)</span><br><span class="line">    c= conn.cursor()       <span class="comment">#获取游标</span></span><br><span class="line">    <span class="comment">#sql 语句</span></span><br><span class="line">    sql = <span class="string">&quot;select id,info_link,pic_link,cname,ename,score,rated,instroduction,info from movie250&quot;</span></span><br><span class="line"></span><br><span class="line">    cursor = c.execute(sql)</span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> cursor:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;id=&quot;</span>,row[<span class="number">0</span>])</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;info_link=&quot;</span>,row[<span class="number">1</span>])</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;pic_link=&quot;</span>,row[<span class="number">2</span>])</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;cname=&quot;</span>,row[<span class="number">3</span>])</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;ename=&quot;</span>,row[<span class="number">4</span>])</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;score=&quot;</span>,row[<span class="number">5</span>])</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;rated=&quot;</span>,row[<span class="number">6</span>])</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;instroduction=&quot;</span>,row[<span class="number">7</span>])</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;info=&quot;</span>,row[<span class="number">8</span>])</span><br><span class="line"></span><br><span class="line">    conn.close()<span class="comment">#关闭数据库链接</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="comment">#调用函数</span></span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试代码"><a href="#测试代码" class="headerlink" title="测试代码"></a>测试代码</h2><h3 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sqlite3</span><br><span class="line"></span><br><span class="line"><span class="comment">#链接数据库</span></span><br><span class="line"><span class="comment"># conn = sqlite3.connect(&quot;test.db&quot;)</span></span><br><span class="line"><span class="comment"># print(&quot;opend database successfully&quot;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#链接数据库，并建表</span></span><br><span class="line"><span class="comment"># conn = sqlite3.connect(&quot;test.db&quot;)</span></span><br><span class="line"><span class="comment"># c= conn.cursor()       #获取游标</span></span><br><span class="line"><span class="comment"># #sql 语句</span></span><br><span class="line"><span class="comment"># sql = &#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="comment">#     create table company</span></span><br><span class="line"><span class="comment">#     (id int primary key not null,</span></span><br><span class="line"><span class="comment">#     name text not null,</span></span><br><span class="line"><span class="comment">#     age int not null,</span></span><br><span class="line"><span class="comment">#     address char(50),</span></span><br><span class="line"><span class="comment">#     salary real);</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="comment"># c.execute(sql)#执行sql语句</span></span><br><span class="line"><span class="comment"># conn.commit()#提交数据库操作</span></span><br><span class="line"><span class="comment"># conn.close()#关闭数据库链接</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#添加数据</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># conn = sqlite3.connect(&quot;test.db&quot;)</span></span><br><span class="line"><span class="comment"># c= conn.cursor()       #获取游标</span></span><br><span class="line"><span class="comment"># #sql 语句</span></span><br><span class="line"><span class="comment"># sql1 = &#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="comment">#     insert into company (id,name,age,address,salary)</span></span><br><span class="line"><span class="comment">#     values(1,&#x27;张三&#x27;,32,&#x27;成都&#x27;,8000)</span></span><br><span class="line"><span class="comment"># &#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="comment"># sql2 = &#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="comment">#     insert into company (id,name,age,address,salary)</span></span><br><span class="line"><span class="comment">#     values(2,&#x27;李四&#x27;,30,&#x27;重庆&#x27;,10000)</span></span><br><span class="line"><span class="comment"># &#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="comment"># c.execute(sql1)#执行sql语句</span></span><br><span class="line"><span class="comment"># c.execute(sql2)</span></span><br><span class="line"><span class="comment"># conn.commit()#提交数据库操作</span></span><br><span class="line"><span class="comment"># conn.close()#关闭数据库链接</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#查询数据</span></span><br><span class="line"></span><br><span class="line">conn = sqlite3.connect(<span class="string">&quot;test.db&quot;</span>)</span><br><span class="line">c= conn.cursor()       <span class="comment">#获取游标</span></span><br><span class="line"><span class="comment">#sql 语句</span></span><br><span class="line">sql = <span class="string">&quot;select id,name,address,salary from company&quot;</span></span><br><span class="line"></span><br><span class="line">cursor = c.execute(sql)</span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> cursor:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;id=&quot;</span>,row[<span class="number">0</span>])</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;name=&quot;</span>,row[<span class="number">1</span>])</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;address=&quot;</span>,row[<span class="number">2</span>])</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;salary=&quot;</span>,row[<span class="number">3</span>])</span><br><span class="line"></span><br><span class="line">conn.close()<span class="comment">#关闭数据库链接</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="网址访问get请求"><a href="#网址访问get请求" class="headerlink" title="网址访问get请求"></a>网址访问get请求</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib.request</span><br><span class="line"></span><br><span class="line"><span class="comment"># #获取一个get请求</span></span><br><span class="line"><span class="comment"># response = urllib.request.urlopen(&quot;http://www.baidu.com&quot;)</span></span><br><span class="line"><span class="comment"># print(response.read().decode(&#x27;utf-8&#x27;))#访问网址，将所有信息保存到一个类，通过read读取</span></span><br><span class="line"><span class="comment"># #使用ytf-8解码</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># #还可以使用post请求     需要服务器代码，可以使用网址       httpbin.org  网址</span></span><br><span class="line"><span class="comment"># #通过post访问时，必须需要一个表单才能访问，即下面的data</span></span><br><span class="line"><span class="comment"># import urllib.parse</span></span><br><span class="line"><span class="comment"># #bytes 转为字节数据</span></span><br><span class="line"><span class="comment"># data = bytes(urllib.parse.urlencode(&#123;&quot;hello&quot;:&quot;world&quot;&#125;),encoding=&quot;utf-8&quot;)</span></span><br><span class="line"><span class="comment"># response = urllib.request.urlopen(&quot;http://httpbin.org/post&quot;,data = data)</span></span><br><span class="line"><span class="comment"># print(response.read().decode(&quot;utf-8&quot;))</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># try:</span></span><br><span class="line"><span class="comment">#     #timeout 即访问等待时间，超时返回异常</span></span><br><span class="line"><span class="comment">#     response = urllib.request.urlopen(&quot;http://httpbin.org/get&quot;,timeout=0.01)</span></span><br><span class="line"><span class="comment">#     print(response.read().decode(&quot;utf-8&quot;))</span></span><br><span class="line"><span class="comment"># except urllib.error.URLError as e:</span></span><br><span class="line"><span class="comment">#     print(&quot;time out!!!&quot;)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># response = urllib.request.urlopen(&quot;http://httpbin.org/get&quot;,timeout=1)</span></span><br><span class="line"><span class="comment"># #status  即访问网址的状态码，如httpbin.org，访问成功返回状态码为200</span></span><br><span class="line"><span class="comment"># #当爬取，douban网时，会识别为爬虫，返回418，禁止爬取</span></span><br><span class="line"><span class="comment"># print(response.status)</span></span><br><span class="line"><span class="comment"># #getheaders获取所有headers，可以使用具体名字访问一部分</span></span><br><span class="line"><span class="comment"># print(response.getheaders())</span></span><br><span class="line"><span class="comment"># print(response.getheader(&quot;Content-Type&quot;))</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># url = &quot;http://httpbin.org/post&quot;</span></span><br><span class="line"><span class="comment"># #headers 可以使用浏览器访问网址获取</span></span><br><span class="line"><span class="comment"># headers = &#123;</span></span><br><span class="line"><span class="comment">#     &quot;User-Agent&quot;: &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36 Edg/103.0.1264.49&quot;</span></span><br><span class="line"><span class="comment"># &#125;</span></span><br><span class="line"><span class="comment"># data = bytes(urllib.parse.urlencode(&#123;&#x27;name&#x27;:&#x27;eric&#x27;&#125;),encoding = &#x27;utf-8&#x27;)</span></span><br><span class="line"><span class="comment"># req = urllib.request.Request(url = url,data=data,headers=headers,method=&quot;POST&quot;)</span></span><br><span class="line"><span class="comment"># response = urllib.request.urlopen(req)</span></span><br><span class="line"><span class="comment"># print(response.read().decode(&quot;utf-8&quot;))</span></span><br><span class="line"></span><br><span class="line">url = <span class="string">&quot;https://www.douban.com&quot;</span></span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&quot;User-Agent&quot;</span>: <span class="string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36 Edg/103.0.1264.49&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">req  =  urllib.request.Request(url=url,headers=headers)</span><br><span class="line">response = urllib.request.urlopen(req)</span><br><span class="line"><span class="built_in">print</span>(response.read().decode(<span class="string">&quot;utf-8&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<h3 id="Excel表格创建写入"><a href="#Excel表格创建写入" class="headerlink" title="Excel表格创建写入"></a>Excel表格创建写入</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> xlwt</span><br><span class="line"></span><br><span class="line">workbook = xlwt.Workbook(encoding=<span class="string">&quot;utf-8&quot;</span>)</span><br><span class="line">worksheet = workbook.add_sheet(<span class="string">&#x27;sheet1&#x27;</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="number">10</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,i+<span class="number">1</span>):</span><br><span class="line">        worksheet.write(i,j,<span class="string">&quot;%d * %d = %d&quot;</span>%(i+<span class="number">1</span>,j+<span class="number">1</span>,(i+<span class="number">1</span>)*(j+<span class="number">1</span>)))</span><br><span class="line">workbook.save(<span class="string">&#x27;student.xls&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="正则表达式-1"><a href="#正则表达式-1" class="headerlink" title="正则表达式"></a>正则表达式</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#title：python  re模块   正则表达式</span></span><br><span class="line"><span class="comment">#time 2022.7.11</span></span><br><span class="line"><span class="comment">#author：涛</span></span><br><span class="line"><span class="comment">#software：jupyter notebook</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">pat = re.<span class="built_in">compile</span>(<span class="string">&quot;AA&quot;</span>)<span class="comment">#此处为正则表达式，去检验其他字符串</span></span><br><span class="line"><span class="comment">#m=pat.search(&quot;CA&quot;)#search字符串被检验的内容,找到第一个匹配字符串的位置</span></span><br><span class="line"><span class="comment">#m= pat.search(&quot;ACA&quot;)</span></span><br><span class="line"><span class="comment">#m= pat.search(&quot;ACAA&quot;)</span></span><br><span class="line">m= pat.search(<span class="string">&quot;ACAABAACAA&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(m)</span><br><span class="line"></span><br><span class="line">a = re.search(<span class="string">&quot;AA&quot;</span>,<span class="string">&quot;ACAABAACAA&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(a)</span><br><span class="line"></span><br><span class="line">b= re.findall(<span class="string">&quot;AA&quot;</span>,<span class="string">&quot;ACAABAACAA&quot;</span>)<span class="comment">#findall 找到满足字符串，并提取出来</span></span><br><span class="line"><span class="built_in">print</span>(b)</span><br><span class="line"></span><br><span class="line">c= re.findall(<span class="string">&quot;[A-Z]&quot;</span>,<span class="string">&quot;ACAABAACAA&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(c)</span><br><span class="line"></span><br><span class="line">d= re.findall(<span class="string">&quot;[A-Z]+&quot;</span>,<span class="string">&quot;ACAAaBAACAA&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(d)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(re.sub(<span class="string">&quot;a&quot;</span>,<span class="string">&quot;A&quot;</span>,<span class="string">&quot;abcdaaAAbA&quot;</span>))<span class="comment">#找到第三个字符串中满足第一个字符串的内容，并用第二个字符串替换</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#建议在正则表达式中，被比较的字符串前面加上r，不用担心转义字符的问题</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\aabd-\&#x27;&quot;</span>) <span class="comment">#比如  \a 和 \&#x27;  会被转义为其他的东西</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">r&quot;\aabd-\&#x27;&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/%E7%88%AC%E8%99%AB/" rel="tag"># 爬虫</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/03/16/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/%E5%9B%BE%E5%83%8F%E5%8F%98%E6%8D%A2/" rel="prev" title="常见图像变换">
+                  <i class="fa fa-chevron-left"></i> 常见图像变换
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/04/05/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/torch%E6%95%99%E7%A8%8B/" rel="next" title="torch_leran">
+                  torch_leran <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小袁</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="数据无损压缩——哈夫曼编码。学习及简单实现过程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="哈夫曼编码">
+<meta property="og:url" content="https://github.com/y-jt/y-jt.github.io/2023/03/14/%E7%AE%97%E6%B3%95/%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95/%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81/index.html">
+<meta property="og:site_name" content="得鹿梦鱼">
+<meta property="og:description" content="数据无损压缩——哈夫曼编码。学习及简单实现过程。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2023/03/14/%E7%AE%97%E6%B3%95/%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95/%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81/1678170420790.png">
+<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2023/03/14/%E7%AE%97%E6%B3%95/%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95/%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81/1678171562217.png">
+<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2023/03/14/%E7%AE%97%E6%B3%95/%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95/%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81/1678178268876.png">
+<meta property="article:published_time" content="2023-03-14T09:01:30.000Z">
+<meta property="article:modified_time" content="2023-03-14T09:05:21.672Z">
+<meta property="article:author" content="小袁">
+<meta property="article:tag" content="c++">
+<meta property="article:tag" content="数据压缩">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/y-jt/y-jt.github.io/2023/03/14/%E7%AE%97%E6%B3%95/%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95/%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81/1678170420790.png">
+
+
+<link rel="canonical" href="https://github.com/y-jt/y-jt.github.io/2023/03/14/%E7%AE%97%E6%B3%95/%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95/%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://github.com/y-jt/y-jt.github.io/2023/03/14/%E7%AE%97%E6%B3%95/%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95/%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81/","path":"2023/03/14/算法/压缩算法/哈夫曼编码/","title":"哈夫曼编码"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>哈夫曼编码 | 得鹿梦鱼</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">得鹿梦鱼</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9"><span class="nav-number">1.</span> <span class="nav-text">数据压缩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%93%88%E5%A4%AB%E6%9B%BC%E6%A0%91"><span class="nav-number">2.</span> <span class="nav-text">哈夫曼树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E8%B7%AF%E5%BE%84%E9%95%BF%E5%BA%A6"><span class="nav-number">2.1.</span> <span class="nav-text">1.二叉树的路径长度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%A4%96%E8%B7%AF%E5%BE%84%E9%95%BF%E5%BA%A6"><span class="nav-number">2.2.</span> <span class="nav-text">2.二叉树的外路径长度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81"><span class="nav-number">2.3.</span> <span class="nav-text">3.哈夫曼编码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BMP%E5%9B%BE%E5%83%8F%E6%96%87%E4%BB%B6%E7%9A%84%E8%AF%BB%E5%86%99"><span class="nav-number">3.</span> <span class="nav-text">BMP图像文件的读写</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="小袁"
+      src="/images/1.png">
+  <p class="site-author-name" itemprop="name">小袁</p>
+  <div class="site-description" itemprop="description">笔记是记忆的痕迹</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/y-jt" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;y-jt"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.apiref.com/" title="https:&#x2F;&#x2F;www.apiref.com&#x2F;" rel="noopener" target="_blank">编程API手册</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://labs.openai.com/" title="https:&#x2F;&#x2F;labs.openai.com&#x2F;" rel="noopener" target="_blank">AI绘图</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://github.com/y-jt/y-jt.github.io/2023/03/14/%E7%AE%97%E6%B3%95/%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95/%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.png">
+      <meta itemprop="name" content="小袁">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="得鹿梦鱼">
+      <meta itemprop="description" content="笔记是记忆的痕迹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="哈夫曼编码 | 得鹿梦鱼">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          哈夫曼编码
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-03-14 17:01:30 / 修改时间：17:05:21" itemprop="dateCreated datePublished" datetime="2023-03-14T17:01:30+08:00">2023-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>数据无损压缩——哈夫曼编码。学习及简单实现过程。</p>
+<span id="more"></span>
+
+<h2 id="数据压缩"><a href="#数据压缩" class="headerlink" title="数据压缩"></a>数据压缩</h2><p>​	数据压缩技术通过重新编码将数据进行压缩存储，从而减少数据占用的存储空间。使用时，再进行解压缩。压缩方法主要有无损压缩和有损压缩。无损压缩的原理是统计被压缩数据中重复数据的出现次数来进行编码。无损压缩能确保解压后的数据不失真，压缩比为 2∶1～5∶1，适用于文本、图像的压缩，不适合实时处理图像、视频和音频数据。 </p>
+<p>​	ASCII 码是最常用的一种定长编码方案，一个字符由 8 位二进制数表示。ASCII 码中每个字符的编码与字符的使用频率无关。在实际应用中，各字符的使用频率不同，如字母 a 的使用频率明显高于字母 z。同样，图像中的数据也有不同的使用频率。 </p>
+<p>​	哈夫曼编码是一种变长的编码方案，字符的编码根据使用频率的不同而长短不一，使用频率高的字符其编码较短，使用频率低的字符其编码较长，从而使所有字符的编码总长度为最短。 </p>
+<p><strong>例如字符串[AAAABBBCDDBBAAA]采用不同的编码方式：</strong></p>
+<ol>
+<li>采用ASCII码存储，15个字符占用15字节，公120位。</li>
+<li>采用哈夫曼编码存储。已知字符集为{A， B， C， D}，统计各字符在指定字符串中的出现次数分别为{7， 5， 1， 2}，求得哈夫曼树和哈夫曼编码如图所示。</li>
+</ol>
+<p><img src="/y-jt/y-jt.github.io/2023/03/14/%E7%AE%97%E6%B3%95/%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95/%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81/1678170420790.png" alt="1678170420790"></p>
+<p>根据哈夫曼编码，将指定字符串压缩如下：</p>
+<p>A	A	A	A	B	B	B	C	D	D	B	B	A	A	A</p>
+<p>0	0	0	0   11	11   11  100  101  101  11   11    0    0    0 </p>
+<p>压缩后数据共26位，采用哈夫曼编码压缩后，数据信息没有损失，因此哈夫曼编码是一种无损压缩。</p>
+<p><strong>变长编码方案必须满足这样一条基本要求：任何一个字符的编码都不是另一个字符编码的前缀。</strong>这样才能保证译码的唯一性。哈夫曼编码满足这一基本要求。</p>
+<h2 id="哈夫曼树"><a href="#哈夫曼树" class="headerlink" title="哈夫曼树"></a>哈夫曼树</h2><h3 id="1-二叉树的路径长度"><a href="#1-二叉树的路径长度" class="headerlink" title="1.二叉树的路径长度"></a>1.二叉树的路径长度</h3><p>​	与树的边、路径、路径长度等概念相同，在二叉树中，从结点 X 到 Y 所经过的结点序列称为从结点 X 到 Y 的一条路径，路径长度为路径上的边数。从根结点到所有结点的路径长度之和称为该二叉树的路径长度（Path Length，PL）。</p>
+<p>​	从根到结点 X 有且仅有一条路径，路径长度为结点 X 的层次减 1。n个结点的不同形态的二叉树，其路径长度也不同，完全二叉树的路径长度最短，但路径长度最短的二叉树不只完全二叉树一种。8 个结点的多棵二叉树及其路径长度如图所示。 </p>
+<p><img src="/y-jt/y-jt.github.io/2023/03/14/%E7%AE%97%E6%B3%95/%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95/%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81/1678171562217.png" alt="1678171562217"></p>
+<h3 id="2-二叉树的外路径长度"><a href="#2-二叉树的外路径长度" class="headerlink" title="2.二叉树的外路径长度"></a>2.二叉树的外路径长度</h3><p>​	一棵二叉树，从根结点到所有叶子结点的路径长度之和称为该二叉树的外路径长度。 </p>
+<p>​	一种编码方案可由一棵二叉树表示，每条边表示一个二进制位 0 或 1，左子树的边表示 0，右子树的边表示 1，每个叶子结点表示一个字符。从根到叶子结点的一条路径上所有边的值组成该字符的编码。表示编码的二叉树中只有 2 度结点和叶子结点，没有 1 度结点。 </p>
+<p>​	一种编码方案的编码总长度为对应编码二叉树的外路径长度，完全二叉树的外路径长度最短。例如，四进制的定长编码对应 7 个结点的满二叉树，如图 6.31（a）所示，其外路径长度为 8，这是所有 7 个结点二叉树中外路径长度最短的。 </p>
+<p>​	同理，可画出八进制和十六进制的编码二叉树。以上讨论的是等概率情况，即编码方案中每个字符的使用概率相等。那么，如果考虑字符的使用概率不相等情况，该如何编码呢？ </p>
+<p><img src="/y-jt/y-jt.github.io/2023/03/14/%E7%AE%97%E6%B3%95/%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95/%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81/1678178268876.png" alt="1678178268876"></p>
+<h3 id="3-哈夫曼编码"><a href="#3-哈夫曼编码" class="headerlink" title="3.哈夫曼编码"></a>3.哈夫曼编码</h3><ul>
+<li>统计文本中字符出现的次数</li>
+<li>将字符按照频数升序排序</li>
+<li>将频数最小的两个叶子结点结合成树，看作一个整体，整体的频数是叶子结点频数和</li>
+<li>把这个树看作整体和其他的一起也进行升序排序</li>
+<li>重复上述过程知道生成整棵树</li>
+</ul>
+<h2 id="BMP图像文件的读写"><a href="#BMP图像文件的读写" class="headerlink" title="BMP图像文件的读写"></a>BMP图像文件的读写</h2>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/c/" rel="tag"># c++</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9/" rel="tag"># 数据压缩</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/03/14/%E7%AE%97%E6%B3%95/%E4%B8%AD%E5%80%BC%E9%98%88%E5%80%BC%E5%92%8Cotsu/" rel="prev" title="中值阈值和otsu">
+                  <i class="fa fa-chevron-left"></i> 中值阈值和otsu
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/03/14/%E6%95%99%E7%A8%8B/hexo%E7%9A%84%E4%BD%BF%E7%94%A8/" rel="next" title="hexo配置使用">
+                  hexo配置使用 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小袁</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

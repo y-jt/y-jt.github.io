@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="中值阈值和大津算法的原理及手动实现。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="中值阈值和otsu">
+<meta property="og:url" content="https://github.com/y-jt/y-jt.github.io/2023/03/14/%E7%AE%97%E6%B3%95/%E4%B8%AD%E5%80%BC%E9%98%88%E5%80%BC%E5%92%8Cotsu/index.html">
+<meta property="og:site_name" content="得鹿梦鱼">
+<meta property="og:description" content="中值阈值和大津算法的原理及手动实现。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-03-14T03:44:48.000Z">
+<meta property="article:modified_time" content="2023-03-22T08:06:03.375Z">
+<meta property="article:author" content="小袁">
+<meta property="article:tag" content="阈值">
+<meta property="article:tag" content="c++">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://github.com/y-jt/y-jt.github.io/2023/03/14/%E7%AE%97%E6%B3%95/%E4%B8%AD%E5%80%BC%E9%98%88%E5%80%BC%E5%92%8Cotsu/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://github.com/y-jt/y-jt.github.io/2023/03/14/%E7%AE%97%E6%B3%95/%E4%B8%AD%E5%80%BC%E9%98%88%E5%80%BC%E5%92%8Cotsu/","path":"2023/03/14/算法/中值阈值和otsu/","title":"中值阈值和otsu"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>中值阈值和otsu | 得鹿梦鱼</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">得鹿梦鱼</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#OTSU"><span class="nav-number">1.</span> <span class="nav-text">OTSU</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">1.2.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81"><span class="nav-number">1.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E5%80%BC%E9%98%88%E5%80%BC"><span class="nav-number">2.</span> <span class="nav-text">中值阈值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="nav-number">2.1.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E4%BD%8E%E9%98%88%E5%80%BC"><span class="nav-number">3.</span> <span class="nav-text">高低阈值</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81-2"><span class="nav-number">3.1.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E4%BB%A3%E7%A0%81"><span class="nav-number">4.</span> <span class="nav-text">测试代码</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="小袁"
+      src="/images/1.png">
+  <p class="site-author-name" itemprop="name">小袁</p>
+  <div class="site-description" itemprop="description">笔记是记忆的痕迹</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/y-jt" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;y-jt"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.apiref.com/" title="https:&#x2F;&#x2F;www.apiref.com&#x2F;" rel="noopener" target="_blank">编程API手册</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://labs.openai.com/" title="https:&#x2F;&#x2F;labs.openai.com&#x2F;" rel="noopener" target="_blank">AI绘图</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://github.com/y-jt/y-jt.github.io/2023/03/14/%E7%AE%97%E6%B3%95/%E4%B8%AD%E5%80%BC%E9%98%88%E5%80%BC%E5%92%8Cotsu/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.png">
+      <meta itemprop="name" content="小袁">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="得鹿梦鱼">
+      <meta itemprop="description" content="笔记是记忆的痕迹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="中值阈值和otsu | 得鹿梦鱼">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          中值阈值和otsu
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-03-14 11:44:48" itemprop="dateCreated datePublished" datetime="2023-03-14T11:44:48+08:00">2023-03-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-03-22 16:06:03" itemprop="dateModified" datetime="2023-03-22T16:06:03+08:00">2023-03-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>中值阈值和大津算法的原理及手动实现。</p>
+<span id="more"></span>
+
+<h2 id="OTSU"><a href="#OTSU" class="headerlink" title="OTSU"></a>OTSU</h2><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>大津法（OTSU）又名最大类间差法，由日本学者大津于1979年提出。被认为是图像分割中阈值选取的最佳算法，计算简单，不受图像亮度和对比度的影响。</p>
+<p>大津法是按图像的灰度特征，把图像分成前景和背景两部分。因方差是灰度分布均匀性的一种度量,背景和前景之间的类间方差越大,说明构成图像的两部分的差别越大,当部分前景错分为背景或部分背景错分为前景都会导致两部分差别变小。因此使用类间方差最大的分割意味着错分概率最小。</p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">对于图像I(x,y)，前景(即目标)和背景的分割阈值记作T，</span><br><span class="line">属于前景的像素点数占整幅图像的比例记为ω0，其平均灰度μ0；</span><br><span class="line">背景像素点数占整幅图像的比例为ω1，其平均灰度为μ1。</span><br><span class="line">图像的总平均灰度记为μ，类间方差记为g。</span><br><span class="line">假设图像的背景较暗，并且图像的大小为M×N，</span><br><span class="line">图像中像素的灰度值小于阈值T的像素个数记作N0，</span><br><span class="line">像素灰度大于阈值T的像素个数记作N1，则有：</span><br><span class="line">　　　　　　ω0=N0/ M×N (1)</span><br><span class="line">　　　　　　ω1=N1/ M×N (2)</span><br><span class="line">　　　　　　N0+N1=M×N (3)</span><br><span class="line">　　　　　　ω0+ω1=1　　　 (4)</span><br><span class="line">　　　　　　μ=ω0*μ0+ω1*μ1 (5)</span><br><span class="line">　　　　　　g=ω0(μ0-μ)^2+ω1(μ1-μ)^2 (6)</span><br><span class="line">将式(5)代入式(6),得到等价公式:</span><br><span class="line">　　　　　　g=ω0ω1(μ0-μ1)^2 　　 (7)　</span><br><span class="line">这就是类间方差采用遍历的方法得到使类间方差g最大的阈值T,即为所求。</span><br></pre></td></tr></table></figure>
+
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//使用大津法Mat的阈值</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">GetMatOTSU</span><span class="params">(Mat&amp; img)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">//判断如果不是单通道直接返回128</span></span><br><span class="line">  <span class="keyword">if</span> (img.<span class="built_in">channels</span>() &gt; <span class="number">1</span>) <span class="keyword">return</span> <span class="number">128</span>;</span><br><span class="line">  <span class="type">int</span> rows = img.rows;</span><br><span class="line">  <span class="type">int</span> cols = img.cols;</span><br><span class="line">  <span class="comment">//定义数组</span></span><br><span class="line">  <span class="type">float</span> mathists[<span class="number">256</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">  <span class="comment">//遍历计算0-255的个数</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> row = <span class="number">0</span>; row &lt; rows; ++row) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> col = <span class="number">0</span>; col &lt; cols; ++col) &#123;</span><br><span class="line">      <span class="type">int</span> val = img.<span class="built_in">at</span>&lt;uchar&gt;(row, col);</span><br><span class="line">      mathists[val]++;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="comment">//定义灰度级像素在整个图像中的比例</span></span><br><span class="line">  <span class="type">float</span> grayPro[<span class="number">256</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">  <span class="type">int</span> matSize = rows * cols;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">256</span>; ++i) &#123;</span><br><span class="line">    grayPro[i] = (<span class="type">float</span>)mathists[i] / (<span class="type">float</span>)matSize;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="comment">//大津法OTSU，前景与背景分割，计算出方差最大的灰度值</span></span><br><span class="line">  <span class="type">int</span> calcval;</span><br><span class="line">  <span class="type">int</span> calcMax = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">256</span>; ++i) &#123;</span><br><span class="line">    <span class="type">float</span> w0 = <span class="number">0</span>, w1 = <span class="number">0</span>, u0tmp = <span class="number">0</span>, u1tmp = <span class="number">0</span>, u0 = <span class="number">0</span>, u1 = <span class="number">0</span>, u = <span class="number">0</span>, calctmp = <span class="number">0</span>;</span><br><span class="line">      </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">0</span>; k &lt; <span class="number">256</span>; ++k) &#123;</span><br><span class="line">      <span class="type">float</span> curGray = grayPro[k];</span><br><span class="line">      <span class="comment">//计算背景部分</span></span><br><span class="line">      <span class="keyword">if</span> (k &lt;= i) &#123;</span><br><span class="line">        <span class="comment">//以i为阈值分类，第一类总的概率</span></span><br><span class="line">        w0 += curGray;</span><br><span class="line">        u0tmp += curGray * k;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">//计算前景部分</span></span><br><span class="line">      <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">//以i为阈值分类，第一类总的概率</span></span><br><span class="line">        w1 += curGray;</span><br><span class="line">        u1tmp += curGray * k;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">//求出第一类和第二类的平均灰度</span></span><br><span class="line">    u0 = u0tmp / w0;</span><br><span class="line">    u1 = u1tmp / w1;</span><br><span class="line">    <span class="comment">//求出整幅图像的平均灰度</span></span><br><span class="line">    u = u0tmp + u1tmp;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">//计算类间方差</span></span><br><span class="line">    calctmp = w0 * <span class="built_in">pow</span>((u0 - u), <span class="number">2</span>) + w1 * <span class="built_in">pow</span>((u1 - u), <span class="number">2</span>);</span><br><span class="line"> </span><br><span class="line">    <span class="comment">//更新最大类间方差，并设置阈值</span></span><br><span class="line">    <span class="keyword">if</span> (calctmp &gt; calcMax) &#123;</span><br><span class="line">      calcMax = calctmp;</span><br><span class="line">      calcval = i;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="keyword">return</span> calcval;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="中值阈值"><a href="#中值阈值" class="headerlink" title="中值阈值"></a>中值阈值</h2><p>要实现自动阈值，方法就是求出图像的灰度直方图，直方图中找出中位数，然后根据中位数值设定一个标准差值，用中位数的值加上标准差来求出高低阈值。</p>
+<p>实现思路：</p>
+<ul>
+<li>图像转灰度图</li>
+<li>求出灰度直方图，并找到中位数</li>
+<li>根据中位数和设定的sigma值求出高低阈值</li>
+<li>使用Canny边缘检测</li>
+</ul>
+<h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//求Mat的中位数</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">CvUtils::GetMatMidVal</span><span class="params">(Mat&amp; img)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">//判断如果不是单通道直接返回128</span></span><br><span class="line">  <span class="keyword">if</span> (img.<span class="built_in">channels</span>() &gt; <span class="number">1</span>) <span class="keyword">return</span> <span class="number">128</span>;</span><br><span class="line">  <span class="type">int</span> rows = img.rows;</span><br><span class="line">  <span class="type">int</span> cols = img.cols;</span><br><span class="line">  <span class="comment">//定义数组</span></span><br><span class="line">  <span class="type">float</span> mathists[<span class="number">256</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">  <span class="comment">//遍历计算0-255的个数</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> row = <span class="number">0</span>; row &lt; rows; ++row) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> col = <span class="number">0</span>; col &lt; cols; ++col) &#123;</span><br><span class="line">      <span class="type">int</span> val = img.<span class="built_in">at</span>&lt;uchar&gt;(row, col);</span><br><span class="line">      mathists[val]++;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="type">int</span> calcval = rows * cols / <span class="number">2</span>;</span><br><span class="line">  <span class="type">int</span> tmpsum = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">255</span>; ++i) &#123;</span><br><span class="line">    tmpsum += mathists[i];</span><br><span class="line">    <span class="keyword">if</span> (tmpsum &gt; calcval) &#123;</span><br><span class="line">      <span class="keyword">return</span> i;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="高低阈值"><a href="#高低阈值" class="headerlink" title="高低阈值"></a>高低阈值</h2><h3 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h3><p>通过设定默认sigma的值，求出高低阈值进行canny。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">GetMinMaxthreshold</span><span class="params">(Mat&amp; img, <span class="type">int</span>&amp; minval, <span class="type">int</span>&amp; maxval,<span class="type">int</span> type, <span class="type">float</span> sigma)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> midval;</span><br><span class="line">	<span class="keyword">if</span> (type == <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		midval = <span class="built_in">getmatmidval</span>(img);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> &#123;</span><br><span class="line">		midval = <span class="built_in">GetMatOTSU</span>(img);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 计算低阈值</span></span><br><span class="line">	minval = <span class="built_in">saturate_cast</span>&lt;uchar&gt;((<span class="number">1.0</span> - sigma) * midval);</span><br><span class="line">	<span class="comment">//计算高阈值</span></span><br><span class="line">	maxval = <span class="built_in">saturate_cast</span>&lt;uchar&gt;((<span class="number">1.0</span> + sigma) * midval);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试代码"><a href="#测试代码" class="headerlink" title="测试代码"></a>测试代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;opencv.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">getmatmidval</span><span class="params">(Mat&amp; img)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (img.<span class="built_in">channels</span>() &gt; <span class="number">1</span>) <span class="keyword">return</span> <span class="number">128</span>;</span><br><span class="line">	<span class="type">int</span> rows = img.rows;</span><br><span class="line">	<span class="type">int</span> cols = img.cols;</span><br><span class="line">	<span class="comment">//定义数组</span></span><br><span class="line">	<span class="type">float</span> mathists[<span class="number">256</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">	<span class="comment">//遍历计算0-255的个数</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> row = <span class="number">0</span>; row &lt; rows; ++row) &#123;</span><br><span class="line">		uchar* ptr = img.<span class="built_in">ptr</span>&lt;uchar&gt;(row);</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> col = <span class="number">0</span>; col &lt; cols; ++col) &#123;</span><br><span class="line">			<span class="type">int</span> val = *ptr;</span><br><span class="line">			mathists[val]++;</span><br><span class="line">			ptr++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="type">int</span> calval = rows * cols / <span class="number">2</span>;</span><br><span class="line">	<span class="type">int</span> tempsum = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">255</span>; ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		tempsum += mathists[i];</span><br><span class="line">		<span class="keyword">if</span> (tempsum &gt; calval) <span class="keyword">return</span> i;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">GetMatOTSU</span><span class="params">(Mat&amp; img)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (img.<span class="built_in">channels</span>() &gt; <span class="number">1</span>) <span class="keyword">return</span> <span class="number">128</span>;</span><br><span class="line">	<span class="type">int</span> rows = img.rows;</span><br><span class="line">	<span class="type">int</span> cols = img.cols;</span><br><span class="line">	<span class="comment">//定义数组</span></span><br><span class="line">	<span class="type">float</span> mathists[<span class="number">256</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">	<span class="comment">//遍历计算0-255的个数</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> row = <span class="number">0</span>; row &lt; rows; ++row) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> col = <span class="number">0</span>; col &lt; cols; ++col) &#123;</span><br><span class="line">			<span class="type">int</span> val = img.<span class="built_in">at</span>&lt;uchar&gt;(row, col);</span><br><span class="line">			mathists[val]++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//定义灰度级像素在整个图像中的比例</span></span><br><span class="line">	<span class="type">float</span> grayPro[<span class="number">256</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">	<span class="type">int</span> matSize = rows * cols;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">256</span>; ++i) &#123;</span><br><span class="line">		grayPro[i] = (<span class="type">float</span>)mathists[i] / (<span class="type">float</span>)matSize;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//大津法OTSU，前景与背景分割，计算出方差最大的灰度值</span></span><br><span class="line">	<span class="type">int</span> calcval;</span><br><span class="line">	<span class="type">int</span> calcMax = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">256</span>; ++i) &#123;</span><br><span class="line">		<span class="type">float</span> w0 = <span class="number">0</span>, w1 = <span class="number">0</span>, u0tmp = <span class="number">0</span>, u1tmp = <span class="number">0</span>, u0 = <span class="number">0</span>, u1 = <span class="number">0</span>, u = <span class="number">0</span>, calctmp = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">0</span>; k &lt; <span class="number">256</span>; ++k) &#123;</span><br><span class="line">			<span class="type">float</span> curGray = grayPro[k];</span><br><span class="line">			<span class="comment">//计算背景部分</span></span><br><span class="line">			<span class="keyword">if</span> (k &lt;= i) &#123;</span><br><span class="line">				<span class="comment">//以i为阈值分类，第一类总的概率</span></span><br><span class="line">				w0 += curGray;</span><br><span class="line">				u0tmp += curGray * k;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="comment">//计算前景部分</span></span><br><span class="line">			<span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="comment">//以i为阈值分类，第一类总的概率</span></span><br><span class="line">				w1 += curGray;</span><br><span class="line">				u1tmp += curGray * k;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//求出第一类和第二类的平均灰度</span></span><br><span class="line">		u0 = u0tmp / w0;</span><br><span class="line">		u1 = u1tmp / w1;</span><br><span class="line">		<span class="comment">//求出整幅图像的平均灰度</span></span><br><span class="line">		u = u0tmp + u1tmp;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//计算类间方差</span></span><br><span class="line">		calctmp = w0 * <span class="built_in">pow</span>((u0 - u), <span class="number">2</span>) + w1 * <span class="built_in">pow</span>((u1 - u), <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//更新最大类间方差，并设置阈值</span></span><br><span class="line">		<span class="keyword">if</span> (calctmp &gt; calcMax) &#123;</span><br><span class="line">			calcMax = calctmp;</span><br><span class="line">			calcval = i;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> calcval;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">GetMinMaxthreshold</span><span class="params">(Mat&amp; img, <span class="type">int</span>&amp; minval, <span class="type">int</span>&amp; maxval,<span class="type">int</span> type, <span class="type">float</span> sigma)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> midval;</span><br><span class="line">	<span class="keyword">if</span> (type == <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		midval = <span class="built_in">getmatmidval</span>(img);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> &#123;</span><br><span class="line">		midval = <span class="built_in">GetMatOTSU</span>(img);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 计算低阈值</span></span><br><span class="line">	minval = <span class="built_in">saturate_cast</span>&lt;uchar&gt;((<span class="number">1.0</span> - sigma) * midval);</span><br><span class="line">	<span class="comment">//计算高阈值</span></span><br><span class="line">	maxval = <span class="built_in">saturate_cast</span>&lt;uchar&gt;((<span class="number">1.0</span> + sigma) * midval);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	Mat src = <span class="built_in">imread</span>(<span class="string">&quot;1.png&quot;</span>, <span class="number">1</span>);</span><br><span class="line">	Mat gray;</span><br><span class="line">	<span class="built_in">cvtColor</span>(src, gray, COLOR_BGR2GRAY);</span><br><span class="line">	<span class="built_in">GaussianBlur</span>(gray, gray, <span class="built_in">Size</span>(<span class="number">3</span>, <span class="number">3</span>), <span class="number">0.5</span>, <span class="number">0.5</span>);</span><br><span class="line">	<span class="type">int</span> minthreshold, maxthreshold;</span><br><span class="line">	<span class="built_in">GetMinMaxthreshold</span>(gray, minthreshold, maxthreshold,<span class="number">0</span>, <span class="number">0.3</span>);</span><br><span class="line">	<span class="type">int</span> minthreshold1, maxthreshold1;</span><br><span class="line">	<span class="built_in">GetMinMaxthreshold</span>(gray, minthreshold1, maxthreshold1, <span class="number">1</span>, <span class="number">0.3</span>);</span><br><span class="line">	Mat dst1, dst2;</span><br><span class="line">	<span class="built_in">Canny</span>(gray, dst1, minthreshold, maxthreshold);</span><br><span class="line">	<span class="built_in">Canny</span>(gray, dst2, minthreshold1, maxthreshold1);</span><br><span class="line">	<span class="built_in">imshow</span>(<span class="string">&quot;1&quot;</span>, dst1);</span><br><span class="line">	<span class="built_in">imshow</span>(<span class="string">&quot;2&quot;</span>, dst2);</span><br><span class="line">	<span class="built_in">waitKey</span>();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%98%88%E5%80%BC/" rel="tag"># 阈值</a>
+              <a href="/tags/c/" rel="tag"># c++</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/03/13/%E6%95%99%E7%A8%8B/git%E7%9A%84%E4%BD%BF%E7%94%A8/" rel="prev" title="git的使用">
+                  <i class="fa fa-chevron-left"></i> git的使用
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/03/14/%E7%AE%97%E6%B3%95/%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95/%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81/" rel="next" title="哈夫曼编码">
+                  哈夫曼编码 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小袁</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

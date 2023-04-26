@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="OpenCV是一个计算机视觉开源库，提供了处理图像和视频的能力。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初识OpenCV.md">
+<meta property="og:url" content="https://github.com/y-jt/y-jt.github.io/2023/04/24/opencv/%E5%88%9D%E8%AF%86OpenCV/index.html">
+<meta property="og:site_name" content="得鹿梦鱼">
+<meta property="og:description" content="OpenCV是一个计算机视觉开源库，提供了处理图像和视频的能力。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2023/04/24/opencv/%E5%88%9D%E8%AF%86OpenCV/640.png">
+<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2023/04/24/opencv/%E5%88%9D%E8%AF%86OpenCV/640-1682322916257.png">
+<meta property="article:published_time" content="2023-04-24T07:48:28.000Z">
+<meta property="article:modified_time" content="2023-04-25T10:16:14.206Z">
+<meta property="article:author" content="小袁">
+<meta property="article:tag" content="-OpenCV">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/y-jt/y-jt.github.io/2023/04/24/opencv/%E5%88%9D%E8%AF%86OpenCV/640.png">
+
+
+<link rel="canonical" href="https://github.com/y-jt/y-jt.github.io/2023/04/24/opencv/%E5%88%9D%E8%AF%86OpenCV/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://github.com/y-jt/y-jt.github.io/2023/04/24/opencv/%E5%88%9D%E8%AF%86OpenCV/","path":"2023/04/24/opencv/初识OpenCV/","title":"初识OpenCV.md"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>初识OpenCV.md | 得鹿梦鱼</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">得鹿梦鱼</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#01-OpenCV%E5%BA%93"><span class="nav-number">1.</span> <span class="nav-text">01 OpenCV库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%A0%B8%E5%BF%83%E5%BA%93OpenCV-core"><span class="nav-number">1.1.</span> <span class="nav-text">1. 核心库OpenCV core</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-opencv-contrib"><span class="nav-number">1.2.</span> <span class="nav-text">2. opencv_contrib</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-opencv-extra"><span class="nav-number">1.3.</span> <span class="nav-text">3. opencv_extra</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#02-OpenCV%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%BA%94%E7%94%A8%E7%9A%84%E5%85%B8%E5%9E%8B%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">02 OpenCV深度学习应用的典型流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#03-OpenCV%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%9D%97"><span class="nav-number">3.</span> <span class="nav-text">03 OpenCV深度学习模块</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%B8%BB%E8%A6%81%E7%89%B9%E6%80%A7"><span class="nav-number">3.1.</span> <span class="nav-text">1. 主要特性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E5%88%86%E7%B1%BB%E7%BD%91%E7%BB%9C"><span class="nav-number">3.1.1.</span> <span class="nav-text">图像分类网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E6%A3%80%E6%B5%8B%E7%BD%91%E7%BB%9C"><span class="nav-number">3.1.2.</span> <span class="nav-text">对象检测网络</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-OpenCV-DNN%E5%9B%BE%E5%83%8F%E5%88%86%E7%B1%BB%E4%B8%BE%E4%BE%8B%EF%BC%88Python%EF%BC%89"><span class="nav-number">3.2.</span> <span class="nav-text">2. OpenCV DNN图像分类举例（Python）</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="小袁"
+      src="/images/1.png">
+  <p class="site-author-name" itemprop="name">小袁</p>
+  <div class="site-description" itemprop="description">笔记是记忆的痕迹</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/y-jt" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;y-jt"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.apiref.com/" title="https:&#x2F;&#x2F;www.apiref.com&#x2F;" rel="noopener" target="_blank">编程API手册</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://labs.openai.com/" title="https:&#x2F;&#x2F;labs.openai.com&#x2F;" rel="noopener" target="_blank">AI绘图</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://github.com/y-jt/y-jt.github.io/2023/04/24/opencv/%E5%88%9D%E8%AF%86OpenCV/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.png">
+      <meta itemprop="name" content="小袁">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="得鹿梦鱼">
+      <meta itemprop="description" content="笔记是记忆的痕迹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="初识OpenCV.md | 得鹿梦鱼">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          初识OpenCV.md
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-04-24 15:48:28" itemprop="dateCreated datePublished" datetime="2023-04-24T15:48:28+08:00">2023-04-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-04-25 18:16:14" itemprop="dateModified" datetime="2023-04-25T18:16:14+08:00">2023-04-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/OpenCV/" itemprop="url" rel="index"><span itemprop="name">-OpenCV</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>OpenCV是一个计算机视觉开源库，提供了处理图像和视频的能力。</p>
+<span id="more"></span>
+
+<p>OpenCV的影响力非常大，有超过47 000的社区用户，以及超过1400万次的下载量。其应用领域横跨图像处理、交互式艺术、视频监督、地图拼接和高级机器人等。作为一个有十几年历史的开源项目，OpenCV拥有广大的用户群体和开发者群体。</p>
+<p>在数字的世界中，一幅图像由多个<strong>点</strong>（像素）组成。图像处理就是对其中一个像素或者一个区域内的像素（块）进行处理。无论是初学者还是富有经验的研发人员，他们都需要借助软件工具来分析这些像素和图像块，<strong>OpenCV则是其中最常用、最重要的一个软件工具。</strong></p>
+<p>OpenCV成为最主要的图像处理工具包，是因为它功能齐全，支持目前主流的图像、视频处理算法，而且对外提供C++、Python和Java的接口，用户调用方便。本书的代码分析、示例程序及环境搭建基于OpenCV 4.1版本，源代码位于GitHub的OpenCV仓库。</p>
+<h2 id="01-OpenCV库"><a href="#01-OpenCV库" class="headerlink" title="01 OpenCV库"></a><strong>01 OpenCV库</strong></h2><p>OpenCV由各种不同组件组成。OpenCV源代码主要由OpenCV core（核心库）、opencv_contrib和opencv_extra等子仓库组成。近些年，OpenCV的主仓库增加了深度学习相关的子仓库：OpenVINO（即DLDT, Deep Learning Deployment Toolkit）、open_model_zoo，以及标注工具CVAT等。</p>
+<p>下面分别介绍<strong>3个主要的代码库</strong>：OpenCV core、opencv_contrib、opencv_extra。</p>
+<h3 id="1-核心库OpenCV-core"><a href="#1-核心库OpenCV-core" class="headerlink" title="1. 核心库OpenCV core"></a><strong>1. 核心库OpenCV core</strong></h3><p>核心库是OpenCV的主要算法来源。OpenCV采用模块化结构设计，包含了多个共享或者静态库。目前OpenCV核心库提供了很多组件，如下所示。</p>
+<ul>
+<li><strong>核心功能模块：</strong>这是一个小巧而高效的模块，定义了基础的数据结构，包含紧密多尺度向量矩阵和一些供其他模块使用的基础函数</li>
+<li><strong>图像处理模块：</strong>它包括了线性和非线性的图像滤波、几何图像变换（图像缩放、仿射变换、透视矫正、通用的基于表格的像素映射）、色域变换及直方图生成与分析等</li>
+<li><strong>视频：</strong>这是一个视频分析模块，包含运动检测、背景减除和对象追踪等算法</li>
+<li><strong>calib3d：</strong>包含基础的多视角几何算法、单个和立体相机标定算法、对象姿势预测算法、立体一致性算法，以及3D元素重建</li>
+<li><strong>Features2d：</strong>图像显著特征检测、特征点描述和匹配</li>
+<li><strong>Objdetect：</strong>对象检测和预先定义的类别检测（如脸、眼、杯子、人、车等）</li>
+<li><strong>Highgui：</strong>提供了比较容易使用的UI接口</li>
+<li><strong>Video I&#x2F;O：</strong>提供了基本的视频存取访问和编解码功能</li>
+<li><strong>GPU：</strong>为不同的OpenCV算法模块提供GPU加速算法</li>
+<li><strong>其他：</strong>如FLANN和Google测试封装层、Python绑定等</li>
+</ul>
+<h3 id="2-opencv-contrib"><a href="#2-opencv-contrib" class="headerlink" title="2. opencv_contrib"></a><strong>2. opencv_contrib</strong></h3><p><strong>opencv_contrib代码库主要用于管理新功能模块的开发。</strong>该库的设计主要基于以下考虑：处于初始开发阶段的功能模块，它的API定义会经常变化，各种测试也不够全面。</p>
+<p>为了不影响OpenCV核心模块的稳定性，这些新功能模块会发布到opencv_contrib中。等到模块足够成熟并且在社区得到了足够的关注和使用之后，这个模块便会被移到OpenCV核心库，这意味着核心库开发团队将会对该模块进行全面的测试，保证这个模块具有产品级的质量。</p>
+<p>例如，对于DNN这个模块，OpenCV 3.1开始出现在opencv_contrib中，到了3.3版本才移到了OpenCV核心库。</p>
+<p>opencv_contrib需要和OpenCV核心库一同编译。下载好opencv_contrib的源代码并在CMake执行时传入参数：-DOPENCV_EXTRA_MODULES_PATH&#x3D;&lt;opencv_contrib源码路径&gt;&#x2F;modules。</p>
+<p>如果编译时遇到问题，则可以在OpenCV核心库和opencv_contrib库的问题汇报页面,查看一下是否有现成的解决方案，如果没有，则读者可新建一个问题。OpenCV是一个活跃的社区，只要问题描述清晰、完整，一般会很快得到反馈。</p>
+<h3 id="3-opencv-extra"><a href="#3-opencv-extra" class="headerlink" title="3. opencv_extra"></a><strong>3. opencv_extra</strong></h3><p><strong>opencv_extra仓库存放了运行测试和示例程序时需要使用的一些测试数据和脚本。</strong>例如，运行DNN模块测试程序或者示例程序时需要用到预训练模型，这些模型可以通过opencv_extra中的脚本来自动下载。近些年添加的opencv&#x2F;open_model_zoo仓库也增加了很多预训练好的深度学习模型，这些模型大多做过性能和速度上的调优。</p>
+<h2 id="02-OpenCV深度学习应用的典型流程"><a href="#02-OpenCV深度学习应用的典型流程" class="headerlink" title="02 OpenCV深度学习应用的典型流程"></a><strong>02 OpenCV深度学习应用的典型流程</strong></h2><p>OpenCV是一个自包含库，可以不依赖于任何第三方库而运行，这个特性给开发调试带来了很大的便利。另外，OpenCV还提供了硬件加速功能，使得算法能够在各种平台高效地执行。</p>
+<p>下面以一个识别性别和年龄的深度学习应用为例，展现OpenCV深度学习应用的典型流程。该应用使用C++语言，总共只需要百来行代码便可实现人脸检测、性别和年龄的识别功能，还可以方便地使用硬件的加速能力，提高程序的运行效率。此处展示核心流程，故以伪代码为例，完整的源代码由本书的参考代码库提供。</p>
+<p><strong>该应用的核心流程如下：</strong>首先读取两个网络模型参数（分别是性别和年龄），然后检测人脸，转换输入图像，最后运行网络前向预测。伪代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入OpenCV DNN模块的命名空间</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv：：dnn;</span><br><span class="line"><span class="comment">// 创建人脸检测器</span></span><br><span class="line">CascadeClassifier cascade；</span><br><span class="line"><span class="comment">// 导入性别和年龄深度神经网络模型</span></span><br><span class="line">Net gender_net=dnn：：readNetFromCaffe（gender_modelTxt， gender_modelBin）；</span><br><span class="line">Net age_net=dnn：：readNetFromCaffe（age_modelTxt， age_modelBin）；</span><br><span class="line"><span class="comment">// 人脸检测</span></span><br><span class="line">cascade.load（cascadeName）；</span><br><span class="line">cascade.detectMultiScale（input_gray_file， output_faces_data）；</span><br><span class="line"><span class="comment">// 准备深度神经网络的输入数据</span></span><br><span class="line">Mat inputBlob=blobFromImage（input.getMat（ACCESS_READ））；</span><br><span class="line">gender_net.setInput（inputBlob, <span class="string">&quot;data&quot;</span>）；</span><br><span class="line">age_net.setInput（inputBlob, <span class="string">&quot;data&quot;</span>）；</span><br><span class="line"><span class="comment">// 执行模型的前向运算，即模型推理</span></span><br><span class="line">Mat gender_prob=gender_net.forward（<span class="string">&quot;prob&quot;</span>）；</span><br><span class="line">Mat age_prob=age_net.forward（<span class="string">&quot;prob&quot;</span>）；</span><br></pre></td></tr></table></figure>
+
+<p>应用识别效果如图1-1所示。</p>
+<p>▲图1-1 应用识别效果图</p>
+<p> <img src="/y-jt/y-jt.github.io/2023/04/24/opencv/%E5%88%9D%E8%AF%86OpenCV/640.png" alt="图片"> </p>
+<p>以上伪代码很好地展示了OpenCV深度学习应用的典型流程，如图1-2所示。</p>
+<p> <img src="/y-jt/y-jt.github.io/2023/04/24/opencv/%E5%88%9D%E8%AF%86OpenCV/640-1682322916257.png" alt="图片"> </p>
+<p>▲图1-2 OpenCV深度学习应用的典型流程</p>
+<h2 id="03-OpenCV深度学习模块"><a href="#03-OpenCV深度学习模块" class="headerlink" title="03 OpenCV深度学习模块"></a><strong>03 OpenCV深度学习模块</strong></h2><p>深度学习模块是OpenCV为支持基于深度学习的计算机视觉应用所加入的新特性。OpenCV DNN模块于OpenCV 3.1版本开始出现在opencv_contrib库中，从3.3版本开始被纳入OpenCV核心库。</p>
+<p>本节主要讲解OpenCV深度学习模块的实现原理和主要特性，通过这些内容，读者可以对OpenCV DNN有一个总体了解，并对OpenCV深度学习模块的应用代码有一个初步的印象。</p>
+<p>作为计算机视觉领域的“标准库”，OpenCV为用户提供深度学习的支持是题中应有之义。OpenCV选择重新实现一个深度学习框架而不是直接调用现有的各种框架（如TensorFlow、Caffe等），有如下几点原因。</p>
+<ul>
+<li><strong>轻量：</strong>OpenCV的深度学习模块只实现了模型推理功能，这使得相关代码非常精简，加速了安装和编译过程。</li>
+<li><strong>最少的外部依赖：</strong>重新实现一遍深度学习框架使得对外部依赖减到最小，大大方便了深度学习应用的部署。</li>
+<li><strong>方便集成：</strong>①如果原来的应用是基于OpenCV开发的，通过深度学习模块可以非常方便地加入对神经网络推理的支持；②如果网络模型来自多个框架，如一个来自TensorFlow，一个来自Caffe，则深度学习模块可以方便整合网络运算结果。</li>
+<li><strong>通用性：</strong>①提供统一的接口来操作网络模型；②内部所做的优化和加速对所有网络模型格式都适用；③支持多种设备和操作系统。</li>
+</ul>
+<h3 id="1-主要特性"><a href="#1-主要特性" class="headerlink" title="1. 主要特性"></a><strong>1. 主要特性</strong></h3><p><strong>OpenCV深度学习模块只提供网络推理功能，不支持网络训练。</strong>像所有的推理框架一样，加载和运行网络模型是基本的功能。深度学习模块支持TensorFlow、Caffe、Torch、DarkNet、ONNX和OpenVINO格式的网络模型，用户无须考虑原格式的差异。在加载过程中，各种格式的模型被转换成统一的内部网络结构。</p>
+<p>深度学习模块支持所有的基本网络层类型和子结构，包括AbsVal、AveragePooling、BatchNormalization、Concatenation、Convolution (with DILATION)、Crop、DetectionOutput、Dropout、Eltwise、Flatten、FullConvolution、FullyConnected、LRN、LSTM、MaxPooling、MaxUnpooling、MVN、NormalizeBBox、Padding、Permute、Power、PReLU、PriorBox、Relu、RNN、Scale、Shift、Sigmoid、Slice、Softmax、Split和Tanh。</p>
+<p>如果需要的层类型不在这个支持列表之内，则可以通过脚注中的申请链接来请求新的层类型的支持，OpenCV的开发者们有可能会在将来加入对该层类型的支持。<strong>读者也可以自己动手实现新的层类型，并把代码反馈回社区，参与到深度学习模块的开发中来。</strong></p>
+<p>除了实现基本的层类型，支持常见的网络架构也很重要，经过严格测试，深度学习模块支持的网络架构如下所示。</p>
+<h4 id="图像分类网络"><a href="#图像分类网络" class="headerlink" title="图像分类网络"></a><strong>图像分类网络</strong></h4><ul>
+<li>Caffe：AlexNet、GoogLeNet、VGG、ResNet、SqueezeNet、DenseNet、ShuffleNet</li>
+<li>TensorFlow：Inception、MobileNet</li>
+<li>Darknet：darknet-imagenet</li>
+<li>ONNX：AlexNet、GoogleNet、CaffeNet、RCNN_ILSVRC13、ZFNet512、VGG16、VGG16_bn、ResNet-18v1、ResNet-50v1、CNN Mnist、MobileNetv2、LResNet100E-IR、Emotion FERPlus、Squeezenet、DenseNet121、Inception-v1&#x2F;v2、ShuffleNet</li>
+</ul>
+<h4 id="对象检测网络"><a href="#对象检测网络" class="headerlink" title="对象检测网络"></a><strong>对象检测网络</strong></h4><ul>
+<li><p>Caffe：SSD、VGG、MobileNet-SSD、Faster-RCNN、R-FCN、OpenCV face detector</p>
+</li>
+<li><p>TensorFlow：SSD、Faster-RCNN、Mask-RCNN、EAST</p>
+</li>
+<li><p>Darknet：YOLOv2、Tiny YOLO、YOLOv3</p>
+</li>
+<li><p>ONNX：TinyYOLOv2</p>
+</li>
+<li><p><strong>语义分割网络：</strong>FCN（Caffe）、ENet（Torch）、ResNet101_DUC_HDC（ONNX）</p>
+</li>
+<li><p><strong>姿势估计网络：</strong>openpose（Caffe）</p>
+</li>
+<li><p><strong>图像处理网络：</strong>Colorization（Caffe）、Fast-Neural-Style（Torch）</p>
+</li>
+<li><p><strong>人脸识别网络：</strong>openface（Torch）</p>
+</li>
+</ul>
+<h3 id="2-OpenCV-DNN图像分类举例（Python）"><a href="#2-OpenCV-DNN图像分类举例（Python）" class="headerlink" title="2. OpenCV DNN图像分类举例（Python）"></a><strong>2. OpenCV DNN图像分类举例（Python）</strong></h3><p>C++和Python是OpenCV应用开发的主要语言，1.1.2节介绍了一个基于C++语言的深度学习应用，本节继续介绍一个基于Python的图像分类示例。</p>
+<p>首先引入必要的Python库：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np <span class="comment"># 引入numpy库</span></span><br><span class="line"><span class="keyword">import</span> cv2 <span class="keyword">as</span> cv <span class="comment"># 引入OpenCV库，深度学习模块包含在其中</span></span><br></pre></td></tr></table></figure>
+
+<p>读入类别文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">with open(&#x27;synset_words.txt&#x27;) as f:</span><br><span class="line">  classes=[x[x.find(&#x27; &#x27;) + 1:] for x in f]</span><br></pre></td></tr></table></figure>
+
+<p>读入待分类的图片：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">image=cv.imread(&#x27;space_shuttle.jpg&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>调用深度学习模块的blobFromImage方法将图片对象转换成网络模型的输入张量（tensor）。该张量的大小是224×224，参数中的(104,117,123)表示需要从输入张量减掉的均值，它是从训练网络模型时用到的数据集计算出来的，这里直接使用即可。第二个参数“1”表示将OpenCV的默认通道顺序BGR转换成网络模型要求的RGB通道顺序。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">input=cv.dnn.blobFromImage(image, 1, (224, 224), (104, 117, 123))</span><br></pre></td></tr></table></figure>
+
+<p>下面来加载Caffe网络模型。注意，相关的模型参数和配置文件可在这里下载：</p>
+<p><a target="_blank" rel="noopener" href="http://dl.caffe.berkeleyvision.org/bvlc_googlenet.caffemodel">http://dl.caffe.berkeleyvision.org/bvlc_googlenet.caffemodel</a></p>
+<p><a href="https://github.com/opencv/opencv_extra/blob/4.1.0/testdata/dnn/bvlc_googlenet.prototxt">https://github.com/opencv/opencv_extra/blob/4.1.0/testdata/dnn/bvlc_googlenet.prototxt</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">net=cv.dnn.readNetFromCaffe(&#x27;bvlc_googlenet.prototxt&#x27;,</span><br><span class="line">              &#x27;bvlc_googlenet.caffemodel&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>设置网络模型输入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net.setInput(input)</span><br></pre></td></tr></table></figure>
+
+<p>执行网络推理并得到输出结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">out=net.forward()</span><br></pre></td></tr></table></figure>
+
+<p>从网络输出中获取最大的5个可能种类的索引值并输出类别名称和概率值：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">indexes=np.argsort(out[0])[-5:]</span><br><span class="line">for i in reversed(indexes):</span><br><span class="line">　print (&#x27;class:&#x27;, classes[i], &#x27; probability:&#x27;, out[0][i])</span><br></pre></td></tr></table></figure>
+
+<p>通过这个例子，我们可以看到一个基于深度学习模型的分类应用并不复杂，<strong>主要分3部分：模型导入、网络执行和结果解析。</strong> </p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OpenCV/" rel="tag"># -OpenCV</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/04/05/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/torch%E6%95%99%E7%A8%8B/" rel="prev" title="torch_leran">
+                  <i class="fa fa-chevron-left"></i> torch_leran
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/04/25/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/opencv_dnn_%E6%8E%A8%E7%90%86%E5%8A%A0%E9%80%9F/" rel="next" title="dnn推理">
+                  dnn推理 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小袁</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

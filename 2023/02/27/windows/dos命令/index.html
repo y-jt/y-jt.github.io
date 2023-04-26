@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="总结DOS常见命令，及用法。简单记录，没有深入学习，知识过了一遍脑子。 头好痒啊！！！！好像要涨知识了！！！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DOS编程">
+<meta property="og:url" content="https://github.com/y-jt/y-jt.github.io/2023/02/27/windows/dos%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:site_name" content="得鹿梦鱼">
+<meta property="og:description" content="总结DOS常见命令，及用法。简单记录，没有深入学习，知识过了一遍脑子。 头好痒啊！！！！好像要涨知识了！！！">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-02-27T09:31:16.000Z">
+<meta property="article:modified_time" content="2023-04-05T07:13:50.588Z">
+<meta property="article:author" content="小袁">
+<meta property="article:tag" content="DOS">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://github.com/y-jt/y-jt.github.io/2023/02/27/windows/dos%E5%91%BD%E4%BB%A4/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://github.com/y-jt/y-jt.github.io/2023/02/27/windows/dos%E5%91%BD%E4%BB%A4/","path":"2023/02/27/windows/dos命令/","title":"DOS编程"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>DOS编程 | 得鹿梦鱼</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">得鹿梦鱼</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text">小知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E6%BC%94%E7%A4%BA"><span class="nav-number">2.</span> <span class="nav-text">简单演示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A6%86%E7%9B%96%E4%B8%8E%E8%BF%BD%E5%8A%A0"><span class="nav-number">3.</span> <span class="nav-text">覆盖与追加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%BA%A7%E5%91%BD%E4%BB%A4"><span class="nav-number">4.</span> <span class="nav-text">多级命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="nav-number">5.</span> <span class="nav-text">参数传递</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%97%B4"><span class="nav-number">6.</span> <span class="nav-text">时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#start"><span class="nav-number">7.</span> <span class="nav-text">start</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#call"><span class="nav-number">8.</span> <span class="nav-text">call</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tasklist-taskill"><span class="nav-number">9.</span> <span class="nav-text">tasklist | taskill</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tree"><span class="nav-number">10.</span> <span class="nav-text">tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shutdown"><span class="nav-number">11.</span> <span class="nav-text">shutdown</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#at"><span class="nav-number">12.</span> <span class="nav-text">at</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#set"><span class="nav-number">13.</span> <span class="nav-text">set</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">14.</span> <span class="nav-text">操作文件夹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E7%BB%93%E6%9E%84"><span class="nav-number">15.</span> <span class="nav-text">循环结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-number">16.</span> <span class="nav-text">用户操作命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#net-user"><span class="nav-number">17.</span> <span class="nav-text">net user</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">18.</span> <span class="nav-text">常用快捷键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ping-telnet"><span class="nav-number">19.</span> <span class="nav-text">ping  telnet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E8%B7%AF%E7%94%B1%E4%BF%A1%E6%81%AF"><span class="nav-number">20.</span> <span class="nav-text">网络路由信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#if-else"><span class="nav-number">21.</span> <span class="nav-text">if else</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8exist"><span class="nav-number">22.</span> <span class="nav-text">判断文件是否存在exist</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for%E9%81%8D%E5%8E%86"><span class="nav-number">23.</span> <span class="nav-text">for遍历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#goto%E5%AE%9E%E7%8E%B0%E6%AD%BB%E5%BE%AA%E7%8E%AF"><span class="nav-number">24.</span> <span class="nav-text">goto实现死循环</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BF%A1%E6%81%AF%E5%B1%95%E7%A4%BA"><span class="nav-number">25.</span> <span class="nav-text">计算机信息展示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E4%BA%92%E6%93%8D%E4%BD%9C"><span class="nav-number">26.</span> <span class="nav-text">交互操作</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="小袁"
+      src="/images/1.png">
+  <p class="site-author-name" itemprop="name">小袁</p>
+  <div class="site-description" itemprop="description">笔记是记忆的痕迹</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/y-jt" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;y-jt"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.apiref.com/" title="https:&#x2F;&#x2F;www.apiref.com&#x2F;" rel="noopener" target="_blank">编程API手册</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://labs.openai.com/" title="https:&#x2F;&#x2F;labs.openai.com&#x2F;" rel="noopener" target="_blank">AI绘图</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://github.com/y-jt/y-jt.github.io/2023/02/27/windows/dos%E5%91%BD%E4%BB%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.png">
+      <meta itemprop="name" content="小袁">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="得鹿梦鱼">
+      <meta itemprop="description" content="笔记是记忆的痕迹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="DOS编程 | 得鹿梦鱼">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          DOS编程
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-02-27 17:31:16" itemprop="dateCreated datePublished" datetime="2023-02-27T17:31:16+08:00">2023-02-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-04-05 15:13:50" itemprop="dateModified" datetime="2023-04-05T15:13:50+08:00">2023-04-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/DOS%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">DOS编程</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/DOS%E7%BC%96%E7%A8%8B/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>总结DOS常见命令，及用法。简单记录，没有深入学习，知识过了一遍脑子。</p>
+<p>头好痒啊！！！！好像要涨知识了！！！</p>
+<span id="more"></span>
+
+<h3 id="小知识"><a href="#小知识" class="headerlink" title="小知识"></a>小知识</h3><p>简单来说，批处理程序就是 Windows 自带的脚本，可以在 cmd | powershell 中直接运行，若写成文件，后缀为 .bat </p>
+<ol>
+<li>cmd 与 powershel 不区分大小写</li>
+<li>命令行的运算操作，类似于 PHP</li>
+<li>DOS 是磁盘操作系统；命令提示符是 DOS 系统的界面中输入 DOS 命令的提示位置；cmd 是系统运行其自带 DOS 的命令；cmd.exe 是一个 16 位的 DOS 应用程序</li>
+<li>PID 是 processid（进程号）；IM 是 imaginename（映像名称）</li>
+<li>在 .bat 文件开头加上 <code>@echo off</code> 代表不输出描述</li>
+<li>设置变量 <code>set a=10</code>，输出变量 <code>echo %a%</code>，设置变量表达式 <code>set /a b=%a%+1</code></li>
+<li>可以通过软件将bat代码转为exe文件</li>
+</ol>
+<h3 id="简单演示"><a href="#简单演示" class="headerlink" title="简单演示"></a>简单演示</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">:: 两个冒号表示 cmd 的注释</span><br><span class="line">rem 也表示 cmd 的注释</span><br><span class="line"># 一个井号表示 powershell 的注释</span><br><span class="line"></span><br><span class="line">@echo off关闭命令</span><br><span class="line"></span><br><span class="line">@echo off</span><br><span class="line">echo &quot;hello world&quot;</span><br><span class="line">pause</span><br><span class="line"></span><br><span class="line">// set /a  + - * / %运算</span><br><span class="line">@echo off</span><br><span class="line">set /a var =1+2</span><br><span class="line">echo %var%</span><br><span class="line">pause</span><br></pre></td></tr></table></figure>
+
+<h3 id="覆盖与追加"><a href="#覆盖与追加" class="headerlink" title="覆盖与追加"></a>覆盖与追加</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">覆盖</span><br><span class="line">echo &quot;hello world&quot; &gt; t.txt</span><br><span class="line"></span><br><span class="line">追加</span><br><span class="line">echo &quot;hello world&quot; &gt;&gt; t.txt</span><br><span class="line"></span><br><span class="line">查看内容</span><br><span class="line">type t.txt</span><br></pre></td></tr></table></figure>
+
+<h3 id="多级命令"><a href="#多级命令" class="headerlink" title="多级命令"></a>多级命令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">短路</span><br><span class="line">ipconfig || net user</span><br><span class="line">从第一个执行，直到执行正确停止，只执行第一个</span><br><span class="line"></span><br><span class="line">断路</span><br><span class="line">ipconfig &amp;&amp; net user</span><br><span class="line">从第一个执行，直到执行错误停止</span><br><span class="line"></span><br><span class="line">管道命令</span><br><span class="line">A | B  将A的输出，作为B的输入</span><br><span class="line">dir | find &quot;.txt&quot;     查找当前文件下所有.txt文件</span><br><span class="line">netstat -an | find &quot;ESTABLISHED&quot;  </span><br></pre></td></tr></table></figure>
+
+<h3 id="参数传递"><a href="#参数传递" class="headerlink" title="参数传递"></a>参数传递</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">bat 文件内容:</span><br><span class="line">echo %1 %2</span><br><span class="line"></span><br><span class="line">poweshell 运行指令:</span><br><span class="line">.\test.bat Hello World!</span><br><span class="line">输出 Hello World!</span><br><span class="line"></span><br><span class="line">net user %1 %2 /add  添加账户 密码</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="时间"><a href="#时间" class="headerlink" title="时间"></a>时间</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">cmd 运行指令:</span><br><span class="line">年月日</span><br><span class="line">date</span><br><span class="line">输出 当前日期: 2021-09-27</span><br><span class="line">date /T</span><br><span class="line">输出 2021-09-27</span><br><span class="line"></span><br><span class="line">时分秒</span><br><span class="line">time</span><br><span class="line">输出 当前时间: 23:14:16.68</span><br><span class="line">time /T</span><br><span class="line">输出 23:14</span><br><span class="line"></span><br><span class="line">poweshell 运行指令:</span><br><span class="line">date</span><br><span class="line">输出 2021年9月27日 23:14:49</span><br></pre></td></tr></table></figure>
+
+<h3 id="start"><a href="#start" class="headerlink" title="start"></a>start</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start /?</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="call"><a href="#call" class="headerlink" title="call"></a>call</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">test.bat 文件内容:</span><br><span class="line">echo &quot;Hello &quot;</span><br><span class="line">call test2.bat</span><br><span class="line"></span><br><span class="line">test2.bat 文件内容:</span><br><span class="line">echo &quot;Wordl!&quot;</span><br><span class="line"></span><br><span class="line">poweshell 运行指令:</span><br><span class="line">.\test.bat</span><br><span class="line">输出 Hello World!</span><br><span class="line">不能进行参数传递</span><br></pre></td></tr></table></figure>
+
+<h3 id="tasklist-taskill"><a href="#tasklist-taskill" class="headerlink" title="tasklist | taskill"></a>tasklist | taskill</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">tasklist | taskil获取当前状态运行进程的列表</span><br><span class="line">tasklist</span><br><span class="line"></span><br><span class="line">获取指定要连接的远程系统的 tasklist</span><br><span class="line">tasklist /S 192.168.0.1 /U admin /S password</span><br><span class="line"></span><br><span class="line">其他参数：/FI 用于筛选 /FO 输出指定格数</span><br><span class="line">tasklist /FI &quot;PID eq 3232&quot; /FO csv &gt; a.csv</span><br><span class="line"></span><br><span class="line">taskkill 是关闭进程</span><br><span class="line">taskkill /IM notepad.exe</span><br><span class="line"></span><br><span class="line">PID可以通过tasklist 查看</span><br><span class="line">taskkill /s ip /u 用户名 /p 密码 /FI &quot;PID eq 860&quot; /F</span><br></pre></td></tr></table></figure>
+
+<h3 id="tree"><a href="#tree" class="headerlink" title="tree"></a>tree</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">文件生成树</span><br><span class="line">tree</span><br><span class="line">输出</span><br><span class="line">C:.</span><br><span class="line">├───a</span><br><span class="line">├───b</span><br><span class="line">└───c</span><br><span class="line"></span><br><span class="line">换一种文件生成树</span><br><span class="line">tree /A</span><br><span class="line">输出</span><br><span class="line">C:.</span><br><span class="line">+---a</span><br><span class="line">+---b</span><br><span class="line">\---c</span><br><span class="line"></span><br><span class="line">详细文件生成树</span><br><span class="line">tree /F</span><br><span class="line">输出</span><br><span class="line">C:.</span><br><span class="line">├───a</span><br><span class="line">│       a.txt</span><br><span class="line">│</span><br><span class="line">├───b</span><br><span class="line">└───c</span><br></pre></td></tr></table></figure>
+
+<h3 id="shutdown"><a href="#shutdown" class="headerlink" title="shutdown"></a>shutdown</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">打开 GUI 执行远程主机关机的操作</span><br><span class="line">shutdown /i</span><br><span class="line"></span><br><span class="line">关闭本地主机</span><br><span class="line">shutdown /p</span><br></pre></td></tr></table></figure>
+
+<h3 id="at"><a href="#at" class="headerlink" title="at"></a>at</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Copy某个时间点执行某个作业</span><br><span class="line">at 21:56 &quot;notepad.exe&quot;</span><br><span class="line"></span><br><span class="line">删除某个作业  2是任务id号</span><br><span class="line">at 2 /delete</span><br><span class="line"></span><br><span class="line">每天都在某个位置执行某个作业，22:00时间和后面任务的位置是可变</span><br><span class="line">at 22:00 /every:M,T,W,Th,F,S,Su C:\Users\14805\desktop\payload.exe</span><br></pre></td></tr></table></figure>
+
+<h3 id="set"><a href="#set" class="headerlink" title="set"></a>set</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Copycmd 运行指令:</span><br><span class="line">显示当前环境变量</span><br><span class="line">set</span><br><span class="line"></span><br><span class="line">输出环境变量值</span><br><span class="line">echo %OS%</span><br><span class="line">输出 Windows_NT</span><br></pre></td></tr></table></figure>
+
+<h3 id="操作文件夹"><a href="#操作文件夹" class="headerlink" title="操作文件夹"></a>操作文件夹</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">dir  查看文件夹与文件</span><br><span class="line"></span><br><span class="line">创建文件夹 mkdir</span><br><span class="line">mkdir test</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">重命名文件夹 ren</span><br><span class="line">ren test test1</span><br><span class="line"></span><br><span class="line">将 a 文件夹中的文件复制到 b 文件夹</span><br><span class="line">copy a b</span><br><span class="line"></span><br><span class="line">删除文件夹 rmdir</span><br><span class="line">rmdir test</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">删除文件 del 后面跟绝对路径</span><br><span class="line">del *.txt</span><br><span class="line"></span><br><span class="line">重命名文件</span><br><span class="line">move test.txt test1.txt</span><br><span class="line"></span><br><span class="line">移动文件</span><br><span class="line">move C:\a\test.txt C:\b\test.txt</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="循环结构"><a href="#循环结构" class="headerlink" title="循环结构"></a>循环结构</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">Copy1.</span><br><span class="line">if () else ()</span><br><span class="line"></span><br><span class="line">2.</span><br><span class="line">if (</span><br><span class="line">) else (</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">3. 循环文件夹</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="keyword">for</span> /d %%名称 <span class="keyword">in</span> (路径/*) <span class="keyword">do</span> 具体操作</span></span><br><span class="line"></span><br><span class="line">.bat文件内容：打印当前文件夹下的所有文件夹</span><br><span class="line">for /d %%a in (*) do echo %%a</span><br><span class="line"></span><br><span class="line">4.循环文件</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="keyword">for</span> /r <span class="string">&quot;目录文件&quot;</span> %%名称 <span class="keyword">in</span> (匹配规则，例如 *.py) <span class="keyword">do</span> 具体操作</span></span><br><span class="line"></span><br><span class="line">.bat文件内容：打印当前文件夹下的所有.py文件</span><br><span class="line">for /r &quot;C:\Users\14805\Desktop\abc&quot; %%a in (*.py) do echo %%a</span><br><span class="line"></span><br><span class="line">5.循环数字</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="keyword">for</span> /L %%a <span class="keyword">in</span> (start,step,end) <span class="keyword">do</span> 具体操作</span></span><br><span class="line"></span><br><span class="line">.bat文件内容：ping 168.0.0.1 至 168.0.0.20（传入参数 %1 等于 168.0.0） </span><br><span class="line">for /L %%a in (1,1,20) do ping %1.%%a</span><br><span class="line"></span><br><span class="line">6.循环文件中的内容</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="keyword">for</span> /F %%a <span class="keyword">in</span> (文件名) <span class="keyword">do</span> 具体操作</span></span><br><span class="line"></span><br><span class="line">.bat文件内容：打印test.bat中的内容</span><br><span class="line">for /F %%a in (test.bat) do echo %%a</span><br></pre></td></tr></table></figure>
+
+<h3 id="用户操作命令"><a href="#用户操作命令" class="headerlink" title="用户操作命令"></a>用户操作命令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">net user 		查看所有用户</span><br><span class="line">net uset 具体用户    查看对应详细信息</span><br><span class="line"></span><br><span class="line">用户组</span><br><span class="line">net localgroup </span><br></pre></td></tr></table></figure>
+
+<h3 id="net-user"><a href="#net-user" class="headerlink" title="net user"></a>net user</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">查看所有用户</span><br><span class="line">net user</span><br><span class="line"></span><br><span class="line">查看帮助</span><br><span class="line">net user /?</span><br><span class="line"></span><br><span class="line">查看帮助完整版</span><br><span class="line">net user /help</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="常用快捷键"><a href="#常用快捷键" class="headerlink" title="常用快捷键#"></a>常用快捷键<a target="_blank" rel="noopener" href="https://www.cnblogs.com/CourserLi/p/15344685.html#309393526">#</a></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Copy清屏</span><br><span class="line">cls</span><br><span class="line"></span><br><span class="line">显示当前目录</span><br><span class="line">dir (cmd | powershell)</span><br><span class="line">ls (powershell)</span><br><span class="line"></span><br><span class="line">打开当前文件夹</span><br><span class="line">start .</span><br><span class="line"></span><br><span class="line">查找文件</span><br><span class="line">dir *.txt (cmd | powershell)</span><br><span class="line"></span><br><span class="line">显示当前路径</span><br><span class="line">pwd (powershell)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="ping-telnet"><a href="#ping-telnet" class="headerlink" title="ping  telnet"></a>ping  telnet</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">检测本地网卡是否异常</span><br><span class="line">ping 127.0.0.1</span><br><span class="line">测试该ip最大缓存</span><br><span class="line">ping -l 111111111111111111111111   ip</span><br><span class="line">一直ping直到主机不在接收为止</span><br><span class="line">ping -l 65500 -t 192.168.0.1</span><br><span class="line"></span><br><span class="line">连接对应主机的端口</span><br><span class="line">telnet ip 端口号 </span><br></pre></td></tr></table></figure>
+
+<h3 id="网络路由信息"><a href="#网络路由信息" class="headerlink" title="网络路由信息"></a>网络路由信息</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">查看本机到对应ip经过多少路由</span><br><span class="line">tracert ip</span><br><span class="line"></span><br><span class="line">查看本机ip配置信息</span><br><span class="line">ipconfig</span><br><span class="line">释放 重新获取</span><br><span class="line">ipconfig /release </span><br><span class="line">ipconfig /renew</span><br><span class="line"></span><br><span class="line">nslookup   可以看到你的默认服务器 ip 地址；</span><br><span class="line">输入ping+空格+你想要获得的域名，例如ping www.baidu.com，我们可以看到使用ping发送了探测报文，14.215.177.38回复了我们，说明该服务器ip地址离当前主机最近(主机离服务器距离越远，传输时间越长，当有多个服务器时，一般会选择最近的那一个服务器);</span><br><span class="line">输入你想要查询的域名，例如www.baidu.com，我们可以看到当前百度有两个ip地址;</span><br><span class="line"></span><br><span class="line">显示 修改ip到mac地址的地址转换表 arp协议</span><br><span class="line">arp -a</span><br></pre></td></tr></table></figure>
+
+<h3 id="if-else"><a href="#if-else" class="headerlink" title="if else"></a>if else</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@echo off</span><br><span class="line">rem 演示if-else结构,()代表代码块</span><br><span class="line"></span><br><span class="line">set v=hello</span><br><span class="line">if %v%==hello (echo ok) else (echo no)</span><br><span class="line"></span><br><span class="line">pause</span><br></pre></td></tr></table></figure>
+
+<h3 id="判断文件是否存在exist"><a href="#判断文件是否存在exist" class="headerlink" title="判断文件是否存在exist"></a>判断文件是否存在exist</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@echo off</span><br><span class="line">if exist 文件绝对路径 () else ()</span><br><span class="line">pause</span><br><span class="line"></span><br><span class="line">判断是否存在并删除</span><br><span class="line">@echo off</span><br><span class="line">if exist 文件绝对路径(</span><br><span class="line">	del 文件绝对路径</span><br><span class="line">) else (</span><br><span class="line"></span><br><span class="line">)</span><br><span class="line">pause</span><br></pre></td></tr></table></figure>
+
+<h3 id="for遍历"><a href="#for遍历" class="headerlink" title="for遍历"></a>for遍历</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">/d 针对文件夹</span><br><span class="line">@echo off</span><br><span class="line">for /d %%a in (路径) do ()</span><br><span class="line">pause</span><br><span class="line"></span><br><span class="line">/r针对文件</span><br><span class="line">for /r 路径 %%v in (匹配规则) do ()</span><br><span class="line"></span><br><span class="line">/l针对数字</span><br><span class="line">for /L %%v in(start,step,end) do ()</span><br><span class="line"></span><br><span class="line">bat文件内容</span><br><span class="line">@echo off</span><br><span class="line">for /L %%v in(1,1,20) do ping %1.%%v</span><br><span class="line">pause</span><br><span class="line"></span><br><span class="line">cmd 对应bat文件跟%1参数192.168.0   自动ping192.168.0.1到20</span><br><span class="line"></span><br><span class="line">/f 遍历文件，对应文件每一行</span><br><span class="line">for /f %%v in (对应文件) do (操作)</span><br></pre></td></tr></table></figure>
+
+<h3 id="goto实现死循环"><a href="#goto实现死循环" class="headerlink" title="goto实现死循环"></a>goto实现死循环</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@echo off</span><br><span class="line">cd 指定目录</span><br><span class="line"></span><br><span class="line">:loop</span><br><span class="line">md virus</span><br><span class="line">cd virus</span><br><span class="line">goto loop</span><br><span class="line">pause</span><br></pre></td></tr></table></figure>
+
+<h3 id="计算机信息展示"><a href="#计算机信息展示" class="headerlink" title="计算机信息展示"></a>计算机信息展示</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">@echo off</span><br><span class="line">echo. &gt; log.txt</span><br><span class="line">echo Lof File &gt;&gt; log.txt</span><br><span class="line">echo. &gt; log.txt</span><br><span class="line">echo User : %username% &gt;&gt; log.txt</span><br><span class="line">Date /t &gt;&gt; log.txt</span><br><span class="line">Time /t &gt;&gt; log.txt</span><br><span class="line">echo. &gt;&gt; log.txt</span><br><span class="line">echo Process Ran by %username% &gt;&gt; log.txt</span><br><span class="line">echo. &gt;&gt; log.txt</span><br><span class="line">tasklist &gt;&gt; log.txt</span><br><span class="line">echo. &gt;&gt; log.txt</span><br><span class="line">echo Network Activities &gt;&gt; log.txt</span><br><span class="line">netstat -s &gt;&gt; log.txt</span><br><span class="line">ipconfig /all &gt;&gt; log.txt</span><br><span class="line">exit</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>Log File - Lo36r<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">center</span>&gt;</span><span class="tag">&lt;<span class="name">h1</span>&gt;</span><span class="tag">&lt;<span class="name">u</span>&gt;</span> Log File<span class="tag">&lt;/<span class="name">u</span>&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">i</span>&gt;</span>This Log file is created by <span class="tag">&lt;<span class="name">b</span>&gt;</span>Lo36r<span class="tag">&lt;/<span class="name">b</span>&gt;</span> for monitoring System Actiivities!<span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">center</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">center</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;log.txt&quot;</span>&gt;</span>Click here to view the Log File<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">ul</span>&gt;</span><span class="tag">&lt;/<span class="name">center</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="交互操作"><a href="#交互操作" class="headerlink" title="交互操作"></a>交互操作</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">@echo off</span><br><span class="line">echo 1.a</span><br><span class="line">echo 2.b</span><br><span class="line">echo 3.c</span><br><span class="line">echo 4.d</span><br><span class="line"></span><br><span class="line">:first</span><br><span class="line">echo Enter your option:</span><br><span class="line">rem set /p 指从键盘输入</span><br><span class="line">set /p opt=</span><br><span class="line">if %opt%==1 goto one</span><br><span class="line">if %opt%==2 goto two</span><br><span class="line">if %opt%==3 goto three</span><br><span class="line">if %opt%==4 goto four</span><br><span class="line">echo Invalid option</span><br><span class="line">goto first</span><br><span class="line"></span><br><span class="line">:one</span><br><span class="line">echo you choise one</span><br><span class="line">pause</span><br><span class="line">exit</span><br><span class="line"></span><br><span class="line">:two</span><br><span class="line">echo you choise two</span><br><span class="line">pause</span><br><span class="line">exit</span><br><span class="line"></span><br><span class="line">:three</span><br><span class="line">echo you choise three</span><br><span class="line">pause</span><br><span class="line">exit</span><br><span class="line"></span><br><span class="line">:four</span><br><span class="line">echo you choise four</span><br><span class="line">pause</span><br><span class="line">exit</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/DOS/" rel="tag"># DOS</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/09/20/%E9%9D%A2%E8%AF%95/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%E9%9D%A2%E8%AF%95/" rel="prev" title="计算机视觉面试">
+                  <i class="fa fa-chevron-left"></i> 计算机视觉面试
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/03/13/%E6%95%99%E7%A8%8B/git%E7%9A%84%E4%BD%BF%E7%94%A8/" rel="next" title="git的使用">
+                  git的使用 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小袁</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
