@@ -20,33 +20,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"github.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="数据无损压缩——哈夫曼编码。学习及简单实现过程。">
+    <meta name="description" content="工作学习中像别人提问的小技巧！">
 <meta property="og:type" content="article">
-<meta property="og:title" content="哈夫曼编码">
-<meta property="og:url" content="https://github.com/y-jt/y-jt.github.io/2023/03/14/%E7%AE%97%E6%B3%95/%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95/%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81/index.html">
+<meta property="og:title" content="提问技巧">
+<meta property="og:url" content="https://github.com/y-jt/y-jt.github.io/2023/07/31/demo/%E5%B7%A5%E4%BD%9C%E5%AD%A6%E4%B9%A0/%E5%B7%A5%E4%BD%9C%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="得鹿梦鱼">
-<meta property="og:description" content="数据无损压缩——哈夫曼编码。学习及简单实现过程。">
+<meta property="og:description" content="工作学习中像别人提问的小技巧！">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2023/03/14/%E7%AE%97%E6%B3%95/%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95/%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81/1678170420790.png">
-<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2023/03/14/%E7%AE%97%E6%B3%95/%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95/%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81/1678171562217.png">
-<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2023/03/14/%E7%AE%97%E6%B3%95/%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95/%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81/1678178268876.png">
-<meta property="article:published_time" content="2023-03-14T09:01:30.000Z">
-<meta property="article:modified_time" content="2023-03-14T09:05:21.672Z">
+<meta property="article:published_time" content="2023-07-31T06:41:46.000Z">
+<meta property="article:modified_time" content="2023-12-29T07:17:52.529Z">
 <meta property="article:author" content="小袁">
-<meta property="article:tag" content="c++">
-<meta property="article:tag" content="数据压缩">
+<meta property="article:tag" content="-技巧 -提问">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://github.com/y-jt/y-jt.github.io/2023/03/14/%E7%AE%97%E6%B3%95/%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95/%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81/1678170420790.png">
 
 
-<link rel="canonical" href="https://github.com/y-jt/y-jt.github.io/2023/03/14/%E7%AE%97%E6%B3%95/%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95/%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81/">
+<link rel="canonical" href="https://github.com/y-jt/y-jt.github.io/2023/07/31/demo/%E5%B7%A5%E4%BD%9C%E5%AD%A6%E4%B9%A0/%E5%B7%A5%E4%BD%9C%E5%AD%A6%E4%B9%A0/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://github.com/y-jt/y-jt.github.io/2023/03/14/%E7%AE%97%E6%B3%95/%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95/%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81/","path":"2023/03/14/算法/压缩算法/哈夫曼编码/","title":"哈夫曼编码"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://github.com/y-jt/y-jt.github.io/2023/07/31/demo/%E5%B7%A5%E4%BD%9C%E5%AD%A6%E4%B9%A0/%E5%B7%A5%E4%BD%9C%E5%AD%A6%E4%B9%A0/","path":"2023/07/31/demo/工作学习/工作学习/","title":"提问技巧"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>哈夫曼编码 | 得鹿梦鱼</title>
+<title>提问技巧 | 得鹿梦鱼</title>
   
 
 
@@ -148,7 +143,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9"><span class="nav-number">1.</span> <span class="nav-text">数据压缩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%93%88%E5%A4%AB%E6%9B%BC%E6%A0%91"><span class="nav-number">2.</span> <span class="nav-text">哈夫曼树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E8%B7%AF%E5%BE%84%E9%95%BF%E5%BA%A6"><span class="nav-number">2.1.</span> <span class="nav-text">1.二叉树的路径长度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%A4%96%E8%B7%AF%E5%BE%84%E9%95%BF%E5%BA%A6"><span class="nav-number">2.2.</span> <span class="nav-text">2.二叉树的外路径长度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81"><span class="nav-number">2.3.</span> <span class="nav-text">3.哈夫曼编码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BMP%E5%9B%BE%E5%83%8F%E6%96%87%E4%BB%B6%E7%9A%84%E8%AF%BB%E5%86%99"><span class="nav-number">3.</span> <span class="nav-text">BMP图像文件的读写</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E9%97%AE%E7%9A%84%E8%89%BA%E6%9C%AF"><span class="nav-number">1.</span> <span class="nav-text">提问的艺术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4%E4%B8%80%EF%BC%9A%E4%BA%8B%E5%85%88%E7%A0%94%E7%A9%B6"><span class="nav-number">1.1.</span> <span class="nav-text">步骤一：事先研究</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4%E4%BA%8C%EF%BC%9A%E6%8F%90%E4%BE%9B%E8%83%8C%E6%99%AF%E4%BF%A1%E6%81%AF"><span class="nav-number">1.2.</span> <span class="nav-text">步骤二：提供背景信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4%E4%B8%89%EF%BC%9A%E5%88%97%E5%87%BA%E7%9B%AE%E5%89%8D%E6%89%80%E5%81%9A%E7%9A%84%E5%B0%9D%E8%AF%95"><span class="nav-number">1.3.</span> <span class="nav-text">步骤三：列出目前所做的尝试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4%E5%9B%9B%EF%BC%9A%E5%86%99%E4%B8%8B%E7%AD%94%E6%A1%88"><span class="nav-number">1.4.</span> <span class="nav-text">步骤四：写下答案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%93%E6%9C%BA%E8%BD%AF%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">专机软件</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -163,18 +158,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">25</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -232,7 +227,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://github.com/y-jt/y-jt.github.io/2023/03/14/%E7%AE%97%E6%B3%95/%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95/%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81/">
+    <link itemprop="mainEntityOfPage" href="https://github.com/y-jt/y-jt.github.io/2023/07/31/demo/%E5%B7%A5%E4%BD%9C%E5%AD%A6%E4%B9%A0/%E5%B7%A5%E4%BD%9C%E5%AD%A6%E4%B9%A0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/1.png">
@@ -245,12 +240,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="哈夫曼编码 | 得鹿梦鱼">
+      <meta itemprop="name" content="提问技巧 | 得鹿梦鱼">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          哈夫曼编码
+          提问技巧
         </h1>
 
         <div class="post-meta-container">
@@ -260,9 +255,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2023-03-14 17:01:30 / 修改时间：17:05:21" itemprop="dateCreated datePublished" datetime="2023-03-14T17:01:30+08:00">2023-03-14</time>
+      <time title="创建时间：2023-07-31 14:41:46" itemprop="dateCreated datePublished" datetime="2023-07-31T14:41:46+08:00">2023-07-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-12-29 15:17:52" itemprop="dateModified" datetime="2023-12-29T15:17:52+08:00">2023-12-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -270,7 +271,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+          <a href="/categories/%E5%B7%A5%E4%BD%9C%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">-工作学习</span></a>
         </span>
     </span>
 
@@ -284,39 +285,28 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>数据无损压缩——哈夫曼编码。学习及简单实现过程。</p>
+        <p>工作学习中像别人提问的小技巧！</p>
 <span id="more"></span>
 
-<h2 id="数据压缩"><a href="#数据压缩" class="headerlink" title="数据压缩"></a>数据压缩</h2><p>​	数据压缩技术通过重新编码将数据进行压缩存储，从而减少数据占用的存储空间。使用时，再进行解压缩。压缩方法主要有无损压缩和有损压缩。无损压缩的原理是统计被压缩数据中重复数据的出现次数来进行编码。无损压缩能确保解压后的数据不失真，压缩比为 2∶1～5∶1，适用于文本、图像的压缩，不适合实时处理图像、视频和音频数据。 </p>
-<p>​	ASCII 码是最常用的一种定长编码方案，一个字符由 8 位二进制数表示。ASCII 码中每个字符的编码与字符的使用频率无关。在实际应用中，各字符的使用频率不同，如字母 a 的使用频率明显高于字母 z。同样，图像中的数据也有不同的使用频率。 </p>
-<p>​	哈夫曼编码是一种变长的编码方案，字符的编码根据使用频率的不同而长短不一，使用频率高的字符其编码较短，使用频率低的字符其编码较长，从而使所有字符的编码总长度为最短。 </p>
-<p><strong>例如字符串[AAAABBBCDDBBAAA]采用不同的编码方式：</strong></p>
-<ol>
-<li>采用ASCII码存储，15个字符占用15字节，公120位。</li>
-<li>采用哈夫曼编码存储。已知字符集为{A， B， C， D}，统计各字符在指定字符串中的出现次数分别为{7， 5， 1， 2}，求得哈夫曼树和哈夫曼编码如图所示。</li>
+<h2 id="提问的艺术"><a href="#提问的艺术" class="headerlink" title="提问的艺术"></a>提问的艺术</h2><p>提问是一门艺术，高明的提问既能尊重他人的时间，又能让你获得需要的答案。</p>
+<h3 id="步骤一：事先研究"><a href="#步骤一：事先研究" class="headerlink" title="步骤一：事先研究"></a>步骤一：事先研究</h3><p>在寻求他人帮助之前，你可以先自己尝试寻找解决方案。虽然不应该害怕向他人提问，但也应该尊重他人时间，确认自己实在无法解决之后，再去问别人。如果你养成了自己不研究，就去问别人的习惯，最终很可能会导致自己过度依赖他人，从而丧失培养自身搜索能力的机会。</p>
+<p>当然，这里所说的先自己尝试解决，不是要你花数小时或者数天时间去研究问题，而是要给自己一个限定的研究时间，比如 30 分钟左右。具体的研究时间还要依据问题而定，太短或太长都不合适。</p>
+<h3 id="步骤二：提供背景信息"><a href="#步骤二：提供背景信息" class="headerlink" title="步骤二：提供背景信息"></a>步骤二：提供背景信息</h3><p>当你决定要向他人提问后，你要尽可能多地向请教的人提供背景信息。</p>
+<p>你可以对比一下同一问题的两种提问方式。第一种是：“我的遇到问题了，你能帮忙吗？”第二种是：“我在用什么模块什么功能的时候，报错显示 xxx误消息，我的代码如下：xxxxxxxxx，我做了这些尝试，都没能成功，你能帮我看看吗？你可以先看下我的代码和报错信息，也可以查看下我做的尝试。”</p>
+<p>如果你采用的是第一种提问方式的话，你需要和对方进行长时间的反复交谈，以便于他把问题弄清楚，了解背景信息。如果你采用第二种提问方式，对方能迅速了解背景信息，快速给予帮助。</p>
+<h3 id="步骤三：列出目前所做的尝试"><a href="#步骤三：列出目前所做的尝试" class="headerlink" title="步骤三：列出目前所做的尝试"></a>步骤三：列出目前所做的尝试</h3><p>除了提供背景信息外，你还需要告诉对方自己已经做了哪些尝试，帮对方省去一些重复尝试。这样可以让对方知道某些方法是行不通的，从而迅速排除掉该方法，把时间和精力投入到寻找其他有效方法上。</p>
+<h3 id="步骤四：写下答案"><a href="#步骤四：写下答案" class="headerlink" title="步骤四：写下答案"></a>步骤四：写下答案</h3><p>当你得到答案后，一定要迅速把答案记下来，形成方法论。以后再遇到同一个问题的时候，也可以从中做下参考。</p>
+<p>此外，你也可以把答案添加到公共文档里，因为很可能你并不是唯一一个遇到此问题的人，通过公开解决方案，你也可以在将来帮助团队中的其他人节省时间。</p>
+<p>以上就是有效提问的四个步骤，希望你能在提问的时候做到既尊重他人的时间，又能获得自己需要的答案。</p>
+<h2 id="专机软件"><a href="#专机软件" class="headerlink" title="专机软件"></a>专机软件</h2><p>1.异常判断(使用必要变量前，进行异常判断)</p>
+<p>2.日志，每一步流程输出日志，必要是统计执行时间。</p>
+<p>3.功能独立(少嵌套 耦合)，流程逻辑简单清晰。函数不要过多封装，注释明了。</p>
+<p>4.各种情况考虑到位。</p>
+<p>5.条件变量，定义 初始状态 使用 复位。</p>
+<ol start="6">
+<li></li>
 </ol>
-<p><img src="/y-jt/y-jt.github.io/2023/03/14/%E7%AE%97%E6%B3%95/%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95/%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81/1678170420790.png" alt="1678170420790"></p>
-<p>根据哈夫曼编码，将指定字符串压缩如下：</p>
-<p>A	A	A	A	B	B	B	C	D	D	B	B	A	A	A</p>
-<p>0	0	0	0   11	11   11  100  101  101  11   11    0    0    0 </p>
-<p>压缩后数据共26位，采用哈夫曼编码压缩后，数据信息没有损失，因此哈夫曼编码是一种无损压缩。</p>
-<p><strong>变长编码方案必须满足这样一条基本要求：任何一个字符的编码都不是另一个字符编码的前缀。</strong>这样才能保证译码的唯一性。哈夫曼编码满足这一基本要求。</p>
-<h2 id="哈夫曼树"><a href="#哈夫曼树" class="headerlink" title="哈夫曼树"></a>哈夫曼树</h2><h3 id="1-二叉树的路径长度"><a href="#1-二叉树的路径长度" class="headerlink" title="1.二叉树的路径长度"></a>1.二叉树的路径长度</h3><p>​	与树的边、路径、路径长度等概念相同，在二叉树中，从结点 X 到 Y 所经过的结点序列称为从结点 X 到 Y 的一条路径，路径长度为路径上的边数。从根结点到所有结点的路径长度之和称为该二叉树的路径长度（Path Length，PL）。</p>
-<p>​	从根到结点 X 有且仅有一条路径，路径长度为结点 X 的层次减 1。n个结点的不同形态的二叉树，其路径长度也不同，完全二叉树的路径长度最短，但路径长度最短的二叉树不只完全二叉树一种。8 个结点的多棵二叉树及其路径长度如图所示。 </p>
-<p><img src="/y-jt/y-jt.github.io/2023/03/14/%E7%AE%97%E6%B3%95/%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95/%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81/1678171562217.png" alt="1678171562217"></p>
-<h3 id="2-二叉树的外路径长度"><a href="#2-二叉树的外路径长度" class="headerlink" title="2.二叉树的外路径长度"></a>2.二叉树的外路径长度</h3><p>​	一棵二叉树，从根结点到所有叶子结点的路径长度之和称为该二叉树的外路径长度。 </p>
-<p>​	一种编码方案可由一棵二叉树表示，每条边表示一个二进制位 0 或 1，左子树的边表示 0，右子树的边表示 1，每个叶子结点表示一个字符。从根到叶子结点的一条路径上所有边的值组成该字符的编码。表示编码的二叉树中只有 2 度结点和叶子结点，没有 1 度结点。 </p>
-<p>​	一种编码方案的编码总长度为对应编码二叉树的外路径长度，完全二叉树的外路径长度最短。例如，四进制的定长编码对应 7 个结点的满二叉树，如图 6.31（a）所示，其外路径长度为 8，这是所有 7 个结点二叉树中外路径长度最短的。 </p>
-<p>​	同理，可画出八进制和十六进制的编码二叉树。以上讨论的是等概率情况，即编码方案中每个字符的使用概率相等。那么，如果考虑字符的使用概率不相等情况，该如何编码呢？ </p>
-<p><img src="/y-jt/y-jt.github.io/2023/03/14/%E7%AE%97%E6%B3%95/%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95/%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81/1678178268876.png" alt="1678178268876"></p>
-<h3 id="3-哈夫曼编码"><a href="#3-哈夫曼编码" class="headerlink" title="3.哈夫曼编码"></a>3.哈夫曼编码</h3><ul>
-<li>统计文本中字符出现的次数</li>
-<li>将字符按照频数升序排序</li>
-<li>将频数最小的两个叶子结点结合成树，看作一个整体，整体的频数是叶子结点频数和</li>
-<li>把这个树看作整体和其他的一起也进行升序排序</li>
-<li>重复上述过程知道生成整棵树</li>
-</ul>
-<h2 id="BMP图像文件的读写"><a href="#BMP图像文件的读写" class="headerlink" title="BMP图像文件的读写"></a>BMP图像文件的读写</h2>
+
     </div>
 
     
@@ -325,21 +315,20 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/c/" rel="tag"># c++</a>
-              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9/" rel="tag"># 数据压缩</a>
+              <a href="/tags/%E6%8A%80%E5%B7%A7-%E6%8F%90%E9%97%AE/" rel="tag"># -技巧 -提问</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/03/14/%E7%AE%97%E6%B3%95/%E4%B8%AD%E5%80%BC%E9%98%88%E5%80%BC%E5%92%8Cotsu/" rel="prev" title="中值阈值和otsu">
-                  <i class="fa fa-chevron-left"></i> 中值阈值和otsu
+                <a href="/2023/07/27/python/py_opencv/" rel="prev" title="py_opencv">
+                  <i class="fa fa-chevron-left"></i> py_opencv
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023/03/14/%E6%95%99%E7%A8%8B/hexo%E7%9A%84%E4%BD%BF%E7%94%A8/" rel="next" title="hexo配置使用">
-                  hexo配置使用 <i class="fa fa-chevron-right"></i>
+                <a href="/2023/08/04/opencv/opencvtest/" rel="next" title="opencvtest">
+                  opencvtest <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>

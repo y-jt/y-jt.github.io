@@ -20,15 +20,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"github.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="判断某个进程是否启动12345678910111213141516171819202122bool checkOnly()&amp;#123;	&#x2F;&#x2F;  创建互斥量  L&quot;进程名(软件名)&quot;	HANDLE m_hMutex &#x3D; CreateMutexW(NULL, FALSE, L&quot;MotionControl&quot;);	&#x2F;&#x2F;  检查错误代码  	if (GetLastEr">
+    <meta name="description" content="Qt使用过程中问题记录">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Qt">
 <meta property="og:url" content="https://github.com/y-jt/y-jt.github.io/2023/07/04/Qt/qt%E4%BD%BF%E7%94%A8/index.html">
 <meta property="og:site_name" content="得鹿梦鱼">
-<meta property="og:description" content="判断某个进程是否启动12345678910111213141516171819202122bool checkOnly()&amp;#123;	&#x2F;&#x2F;  创建互斥量  L&quot;进程名(软件名)&quot;	HANDLE m_hMutex &#x3D; CreateMutexW(NULL, FALSE, L&quot;MotionControl&quot;);	&#x2F;&#x2F;  检查错误代码  	if (GetLastEr">
+<meta property="og:description" content="Qt使用过程中问题记录">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-07-04T03:35:32.000Z">
-<meta property="article:modified_time" content="2023-07-04T08:11:55.516Z">
+<meta property="article:modified_time" content="2023-12-29T05:37:57.306Z">
 <meta property="article:author" content="小袁">
 <meta property="article:tag" content="-教程 -Qt">
 <meta name="twitter:card" content="summary">
@@ -143,7 +143,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A4%E6%96%AD%E6%9F%90%E4%B8%AA%E8%BF%9B%E7%A8%8B%E6%98%AF%E5%90%A6%E5%90%AF%E5%8A%A8"><span class="nav-number">1.</span> <span class="nav-text">判断某个进程是否启动</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%88%A4%E6%96%AD%E6%9F%90%E4%B8%AA%E8%BF%9B%E7%A8%8B%E6%98%AF%E5%90%A6%E5%90%AF%E5%8A%A8"><span class="nav-number">1.</span> <span class="nav-text">1.判断某个进程是否启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%BE%8E%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">2.美化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%A0%B7%E5%BC%8F%E8%A1%A8qss%E4%BD%BF%E7%94%A8"><span class="nav-number">2.1.</span> <span class="nav-text">1.样式表qss使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%8E%A7%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">3.控件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-combobox%E4%B8%8B%E6%8B%89%E9%80%89%E6%8B%A9"><span class="nav-number">3.1.</span> <span class="nav-text">1.combobox下拉选择</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -158,18 +158,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">25</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -255,9 +255,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2023-07-04 11:35:32 / 修改时间：16:11:55" itemprop="dateCreated datePublished" datetime="2023-07-04T11:35:32+08:00">2023-07-04</time>
+      <time title="创建时间：2023-07-04 11:35:32" itemprop="dateCreated datePublished" datetime="2023-07-04T11:35:32+08:00">2023-07-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-12-29 13:37:57" itemprop="dateModified" datetime="2023-12-29T13:37:57+08:00">2023-12-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -279,7 +285,25 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h3 id="判断某个进程是否启动"><a href="#判断某个进程是否启动" class="headerlink" title="判断某个进程是否启动"></a>判断某个进程是否启动</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">checkOnly</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//  创建互斥量  L&quot;进程名(软件名)&quot;</span></span><br><span class="line">	HANDLE m_hMutex = <span class="built_in">CreateMutexW</span>(<span class="literal">NULL</span>, FALSE, <span class="string">L&quot;MotionControl&quot;</span>);</span><br><span class="line">	<span class="comment">//  检查错误代码  </span></span><br><span class="line">	<span class="keyword">if</span> (<span class="built_in">GetLastError</span>() == ERROR_ALREADY_EXISTS) &#123;</span><br><span class="line">		<span class="comment">//  如果已有互斥量存在则释放句柄并复位互斥量  </span></span><br><span class="line">		<span class="built_in">CloseHandle</span>(m_hMutex);</span><br><span class="line">		m_hMutex = <span class="literal">NULL</span>;</span><br><span class="line">		<span class="comment">//  程序退出  </span></span><br><span class="line">		<span class="keyword">return</span>  <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line">	<span class="comment">//	某个进程是否启动</span></span><br><span class="line">	<span class="keyword">if</span> (<span class="built_in">checkOnly</span>() == <span class="literal">false</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		QMessageBox::<span class="built_in">warning</span>(<span class="literal">nullptr</span>, <span class="string">&quot;提示&quot;</span>, <span class="string">&quot;软件已经启动&quot;</span>, QMessageBox::Ok, QMessageBox::No);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+        <p>Qt使用过程中问题记录</p>
+<span id="more"></span>
+
+<blockquote>
+<p>Qt项目的相对路径不是项目位置，在pro文件中DESTDIR &#x3D; $$PWD解决。</p>
+</blockquote>
+<h2 id="1-判断某个进程是否启动"><a href="#1-判断某个进程是否启动" class="headerlink" title="1.判断某个进程是否启动"></a>1.判断某个进程是否启动</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">checkOnly</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//  创建互斥量  L&quot;进程名(软件名)&quot;</span></span><br><span class="line">	HANDLE m_hMutex = <span class="built_in">CreateMutexW</span>(<span class="literal">NULL</span>, FALSE, <span class="string">L&quot;MotionControl&quot;</span>);</span><br><span class="line">	<span class="comment">//  检查错误代码  </span></span><br><span class="line">	<span class="keyword">if</span> (<span class="built_in">GetLastError</span>() == ERROR_ALREADY_EXISTS) &#123;</span><br><span class="line">		<span class="comment">//  如果已有互斥量存在则释放句柄并复位互斥量  </span></span><br><span class="line">		<span class="built_in">CloseHandle</span>(m_hMutex);</span><br><span class="line">		m_hMutex = <span class="literal">NULL</span>;</span><br><span class="line">		<span class="comment">//  程序退出  </span></span><br><span class="line">		<span class="keyword">return</span>  <span class="literal">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line">	<span class="comment">//	某个进程是否启动</span></span><br><span class="line">	<span class="keyword">if</span> (<span class="built_in">checkOnly</span>() == <span class="literal">false</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		QMessageBox::<span class="built_in">warning</span>(<span class="literal">nullptr</span>, <span class="string">&quot;提示&quot;</span>, <span class="string">&quot;软件已经启动&quot;</span>, QMessageBox::Ok, QMessageBox::No);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-美化"><a href="#2-美化" class="headerlink" title="2.美化"></a>2.美化</h2><h3 id="1-样式表qss使用"><a href="#1-样式表qss使用" class="headerlink" title="1.样式表qss使用"></a>1.样式表qss使用</h3><p>1.Qt编辑器里面使用</p>
+<p> “右键项目”—“添加新文件”，选择“Qt类”—再选择“Qt Resource File” </p>
+<p> 右键“qss.qrc”—“add prefix”—<strong>prefix名</strong>就是后面读文件用到的名。</p>
+<p><strong>prefix名</strong>是123—qssFile(“:&#x2F;123&#x2F;1.qss”);</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">QString qss;</span><br><span class="line"><span class="function">QFile <span class="title">qssFile</span><span class="params">(<span class="string">&quot;:/1.qss&quot;</span>)</span></span>;</span><br><span class="line">qssFile.<span class="built_in">open</span>(QFile::ReadOnly);</span><br><span class="line"><span class="keyword">if</span>(qssFile.<span class="built_in">isOpen</span>())</span><br><span class="line">&#123;</span><br><span class="line">    qss = <span class="built_in">QLatin1String</span>(qssFile.<span class="built_in">readAll</span>());</span><br><span class="line">    qApp-&gt;<span class="built_in">setStyleSheet</span>(qss);</span><br><span class="line">    qssFile.<span class="built_in">close</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2.vs里面使用</p>
+<p>直接使用，注意qss文件路径。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">QString qss;</span><br><span class="line">QFile qssFile(&quot;1.qss&quot;);</span><br><span class="line">qssFile.open(QFile::ReadOnly);</span><br><span class="line">if(qssFile.isOpen())</span><br><span class="line">&#123;</span><br><span class="line">qss = QLatin1String(qssFile.readAll());</span><br><span class="line">qApp-&gt;setStyleSheet(qss);</span><br><span class="line">qssFile.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-控件"><a href="#3-控件" class="headerlink" title="3.控件"></a>3.控件</h2><h3 id="1-combobox下拉选择"><a href="#1-combobox下拉选择" class="headerlink" title="1.combobox下拉选择"></a>1.combobox下拉选择</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">comboBox-&gt;addItem(&quot;Option&quot;);//添加选项</span><br><span class="line">QString currentText = comboBox-&gt;currentText();//获取当前选中的文本</span><br><span class="line">int currentIndex = comboBox-&gt;currentIndex();//获取当前选中index</span><br><span class="line">connect(LComboBox,SIGNAL( QComboBox::currentIndexChanged), this, SLOT(boxTxt()));//选中框发生变化后，执行对应槽函数</span><br></pre></td></tr></table></figure>
 
 
     </div>

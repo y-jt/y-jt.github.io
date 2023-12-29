@@ -28,8 +28,9 @@
 <meta property="og:description" content="使用Hexo+GitHub完成部署。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2023/03/14/%E6%95%99%E7%A8%8B/hexo%E7%9A%84%E4%BD%BF%E7%94%A8/1678785047227.png">
+<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2023/03/14/%E6%95%99%E7%A8%8B/hexo%E7%9A%84%E4%BD%BF%E7%94%A8/1689927249163.png">
 <meta property="article:published_time" content="2023-03-14T09:08:08.000Z">
-<meta property="article:modified_time" content="2023-05-10T03:10:41.768Z">
+<meta property="article:modified_time" content="2023-07-21T08:14:58.672Z">
 <meta property="article:author" content="小袁">
 <meta property="article:tag" content="hexo">
 <meta property="article:tag" content="教程">
@@ -161,18 +162,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-count">25</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -266,7 +267,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-10 11:10:41" itemprop="dateModified" datetime="2023-05-10T11:10:41+08:00">2023-05-10</time>
+      <time title="修改时间：2023-07-21 16:14:58" itemprop="dateModified" datetime="2023-07-21T16:14:58+08:00">2023-07-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -300,7 +301,7 @@
 </li>
 <li><p>登录GitHub，创建一个仓库，仓库名必须与GitHub注册名一致并且加上.github.io。</p>
 </li>
-<li><p>打开Git bash，通过ssh检测是否安装ssh，并通过ssh -keygen -t -rsa -C “加上GitHub注册邮箱”    点击4次回车。在C盘\用户\你的id\ .ssh文件夹下找到id_rsa.pub文件，复制里面所有内容。打开GitHub，setting，SSH，新建一个SSH。ssh -T <a href="mailto:&#x67;&#105;&#x74;&#64;&#103;&#105;&#x74;&#x68;&#117;&#98;&#46;&#x63;&#x6f;&#109;">&#x67;&#105;&#x74;&#64;&#103;&#105;&#x74;&#x68;&#117;&#98;&#46;&#x63;&#x6f;&#109;</a>测试是否绑定成功。</p>
+<li><p>打开Git bash，通过ssh检测是否安装ssh，并通过ssh -keygen -t -rsa -C “加上GitHub注册邮箱”    点击4次回车。在C盘\用户\你的id\ .ssh文件夹下找到id_rsa.pub文件，复制里面所有内容。打开GitHub，setting，SSH，新建一个SSH。ssh -T <a href="mailto:&#x67;&#x69;&#116;&#x40;&#x67;&#x69;&#x74;&#x68;&#117;&#x62;&#46;&#99;&#x6f;&#109;">&#x67;&#x69;&#116;&#x40;&#x67;&#x69;&#x74;&#x68;&#117;&#x62;&#46;&#99;&#x6f;&#109;</a>测试是否绑定成功。</p>
 </li>
 <li><p>本地创建博客，在本地创建一个文件夹，在这儿打开Git bash，输入hexo init#初始化hexo。</p>
 </li>
@@ -316,9 +317,11 @@
 <li><h6 id="hexo-clean-清理-hexo-g生成-hexo-s本地发布-hexo-d-上传github"><a href="#hexo-clean-清理-hexo-g生成-hexo-s本地发布-hexo-d-上传github" class="headerlink" title="hexo clean 清理    hexo g生成  hexo s本地发布  hexo d  上传github"></a>hexo clean 清理    hexo g生成  hexo s本地发布  hexo d  上传github</h6></li>
 </ol>
 <h2 id="hexo-s后图像无法显示"><a href="#hexo-s后图像无法显示" class="headerlink" title="hexo s后图像无法显示"></a>hexo s后图像无法显示</h2><p>1.首先打开typora设置图片的保存位置。</p>
-<p><img src="/y-jt/y-jt.github.io/2023/03/14/%E6%95%99%E7%A8%8B/hexo%E7%9A%84%E4%BD%BF%E7%94%A8/1678785047227.png" alt="1678785047227"></p>
+<p><img src="1678785047227.png" alt="1678785047227"></p>
 <p>2.打开博客根目录下的_config.yml文件，将其中post_asset_folder设置为true，post_asset_folder: true。</p>
 <p>3.安装npm install <a href="https://github.com/CodeFalling/hexo-asset-image">https://github.com/CodeFalling/hexo-asset-image</a> –save	这个插件</p>
+<p>4.修改node_modules\hexo-asset-image\index.js</p>
+<p><img src="1689927249163.png" alt="1689927249163"></p>
 
     </div>
 
@@ -336,7 +339,7 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/03/14/%E7%AE%97%E6%B3%95/%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95/%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81/" rel="prev" title="哈夫曼编码">
+                <a href="/2023/03/14/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81/" rel="prev" title="哈夫曼编码">
                   <i class="fa fa-chevron-left"></i> 哈夫曼编码
                 </a>
             </div>
