@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="记录在qt下使用消息订阅mqtt。 qt官网有qtmqtt库。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="qtmqtt">
+<meta property="og:url" content="https://github.com/y-jt/y-jt.github.io/2024/03/15/Qt/qtmqtt/index.html">
+<meta property="og:site_name" content="得鹿梦鱼">
+<meta property="og:description" content="记录在qt下使用消息订阅mqtt。 qt官网有qtmqtt库。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2024/03/15/Qt/qtmqtt/1710485593561.png">
+<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2024/03/15/Qt/qtmqtt/1710486498992.png">
+<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2024/03/15/Qt/qtmqtt/1710486577279.png">
+<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2024/03/15/Qt/qtmqtt/1710486672558.png">
+<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2024/03/15/Qt/qtmqtt/1710488970443.png">
+<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2024/03/15/Qt/qtmqtt/1710487191061.png">
+<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2024/03/15/Qt/qtmqtt/1710487314259.png">
+<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2024/03/15/Qt/qtmqtt/1710487387578.png">
+<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2024/03/15/Qt/qtmqtt/1710487639839.png">
+<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2024/03/15/Qt/qtmqtt/1710487698403.png">
+<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2024/03/15/Qt/qtmqtt/1710487937253.png">
+<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2024/03/15/Qt/qtmqtt/1710488018794.png">
+<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2024/03/15/Qt/qtmqtt/1710488097398.png">
+<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2024/03/15/Qt/qtmqtt/1710488171271.png">
+<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2024/03/15/Qt/qtmqtt/1710488247546.png">
+<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2024/03/15/Qt/qtmqtt/1710488280418.png">
+<meta property="article:published_time" content="2024-03-15T06:43:57.000Z">
+<meta property="article:modified_time" content="2024-03-15T07:55:58.367Z">
+<meta property="article:author" content="小袁">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/y-jt/y-jt.github.io/2024/03/15/Qt/qtmqtt/1710485593561.png">
+
+
+<link rel="canonical" href="https://github.com/y-jt/y-jt.github.io/2024/03/15/Qt/qtmqtt/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://github.com/y-jt/y-jt.github.io/2024/03/15/Qt/qtmqtt/","path":"2024/03/15/Qt/qtmqtt/","title":"qtmqtt"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>qtmqtt | 得鹿梦鱼</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">得鹿梦鱼</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-mqtt%E6%9C%AC%E5%9C%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA"><span class="nav-number">1.</span> <span class="nav-text">1.mqtt本地服务器搭建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-MQTTX%E6%B5%8B%E8%AF%95mqtt"><span class="nav-number">2.</span> <span class="nav-text">2.MQTTX测试mqtt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%9C%AC%E5%9C%B0mqtt%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-qt%E4%B8%8B"><span class="nav-number">3.</span> <span class="nav-text">3.本地mqtt环境搭建(qt下)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1%E4%BD%BF%E7%94%A8"><span class="nav-number">3.1.</span> <span class="nav-text">3.1使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#h"><span class="nav-number">3.2.</span> <span class="nav-text">.h</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cpp"><span class="nav-number">3.3.</span> <span class="nav-text">.cpp</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="小袁"
+      src="/images/1.png">
+  <p class="site-author-name" itemprop="name">小袁</p>
+  <div class="site-description" itemprop="description">笔记是记忆的痕迹</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/y-jt" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;y-jt"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.apiref.com/" title="https:&#x2F;&#x2F;www.apiref.com&#x2F;" rel="noopener" target="_blank">编程API手册</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://labs.openai.com/" title="https:&#x2F;&#x2F;labs.openai.com&#x2F;" rel="noopener" target="_blank">AI绘图</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://github.com/y-jt/y-jt.github.io/2024/03/15/Qt/qtmqtt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.png">
+      <meta itemprop="name" content="小袁">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="得鹿梦鱼">
+      <meta itemprop="description" content="笔记是记忆的痕迹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="qtmqtt | 得鹿梦鱼">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          qtmqtt
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-03-15 14:43:57 / 修改时间：15:55:58" itemprop="dateCreated datePublished" datetime="2024-03-15T14:43:57+08:00">2024-03-15</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>记录在qt下使用消息订阅mqtt。</p>
+<p>qt官网有qtmqtt库。</p>
+<span id="more"></span>
+
+<h3 id="1-mqtt本地服务器搭建"><a href="#1-mqtt本地服务器搭建" class="headerlink" title="1.mqtt本地服务器搭建"></a>1.mqtt本地服务器搭建</h3><p><a target="_blank" rel="noopener" href="https://www.emqx.com/zh/downloads/broker">EMQX软件</a>，我使用时5.3.2版本及之前才提供windows版本下载。</p>
+<p>下载解压后，cmd cd到emqx&#x2F;bin目录下:</p>
+<p><img src="1710485593561.png" alt="1710485593561"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">emqx install</span><br><span class="line">#成功后界面上会ChangeServiceConfig 成功</span><br><span class="line">#再运行</span><br><span class="line">emqx console</span><br><span class="line">#运行成功后会显示emqx is started!</span><br><span class="line">#会自动打开某几个端口</span><br><span class="line">Ctrl C退出</span><br><span class="line">    </span><br><span class="line">本地浏览器输入http:<span class="comment">//127.0.0.1:18083/</span></span><br><span class="line">初始用户名admin和用户密码public，即可进入控制面板，并进行MQTT服务器相关配置</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-MQTTX测试mqtt"><a href="#2-MQTTX测试mqtt" class="headerlink" title="2.MQTTX测试mqtt"></a>2.MQTTX测试mqtt</h3><p><a target="_blank" rel="noopener" href="https://mqttx.app/zh">MQTTX</a></p>
+<p><a target="_blank" rel="noopener" href="https://mqttx.app/zh/docs">MQTTX文档</a></p>
+<p>Name和Client ID随意，Host填写我们本地配置的MQTT服务器地址<code>127.0.0.1</code>，端口号填1883。点击<code>Connect</code>即可连接到本地。</p>
+<p>连接后，点击<code>New Subscription</code>创建topic，然后就可以在该topic下收发消息。</p>
+<h3 id="3-本地mqtt环境搭建-qt下"><a href="#3-本地mqtt环境搭建-qt下" class="headerlink" title="3.本地mqtt环境搭建(qt下)"></a>3.本地mqtt环境搭建(qt下)</h3><p><a href="https://github.com/qt/qtmqtt">qtmqtt</a></p>
+<p>由于我qt版本是5.12.3，qtmqtt我也下载5.12.3，版本不对应时是否能用，没有测试。</p>
+<p>下载后解压。</p>
+<p>3.1首先在qt安装目录include文件夹下新建QtMqtt目录。</p>
+<p><img src="1710486498992.png" alt="1710486498992"></p>
+<p>3.2将解压目录src&#x2F;mqtt下的所有.h文件拷贝到上面新建目录下。</p>
+<p><img src="1710486577279.png" alt="1710486577279"></p>
+<p>3.3所有_p.h结尾的头文件放到private文件夹下</p>
+<p><img src="1710486672558.png" alt="1710486672558"></p>
+<p>3.4QtMqtt文件下包含所有头文件。</p>
+<p><img src="1710488970443.png" alt="1710488970443"></p>
+<p>3.5打开.pro，然后编译</p>
+<p><img src="1710487191061.png" alt="1710487191061"></p>
+<p><img src="1710487314259.png" alt="1710487314259"></p>
+<p>直接编译</p>
+<p><img src="1710487387578.png" alt="1710487387578"></p>
+<p>将生成的lib文件夹下，这4个文件，拷贝到qt编译器对应的目录lib目录下：</p>
+<p><img src="1710487639839.png" alt="1710487639839"><img src="1710487698403.png" alt="1710487698403"></p>
+<p>将生成的bin文件夹下，dll拷贝到qt编译器对应的bin目录下：</p>
+<p><img src="1710487937253.png" alt="1710487937253">          <img src="1710488018794.png" alt="1710488018794"></p>
+<p>将mkspecs&#x2F;modules-inst下的文件,拷贝到qt编译器目录mkspecs&#x2F;modules下</p>
+<p><img src="1710488097398.png" alt="1710488097398">      <img src="1710488171271.png" alt="1710488171271"></p>
+<p>将lib&#x2F;cmake文件夹,拷贝到qt编译器目录lib&#x2F;cmake下</p>
+<p><img src="1710488247546.png" alt="1710488247546">     <img src="1710488280418.png" alt="1710488280418"></p>
+<h4 id="3-1使用"><a href="#3-1使用" class="headerlink" title="3.1使用"></a>3.1使用</h4><p><a target="_blank" rel="noopener" href="https://doc.qt.io/qt-5/qtmqtt-index.html">qtmqtt使用文档</a></p>
+<p> 在.pro中添加模块 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QT += mqtt</span><br></pre></td></tr></table></figure>
+
+<p> 引入包： </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;QtMqtt/qmqttclient.h&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="h"><a href="#h" class="headerlink" title=".h"></a>.h</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifndef</span> MAINWINDOW_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MAINWINDOW_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QMainWindow&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;QtMqtt/qmqttclient.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QDateTime&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> Ui &#123;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MainWindow</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MainWindow</span> : <span class="keyword">public</span> QMainWindow</span><br><span class="line">&#123;</span><br><span class="line">    Q_OBJECT</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">MainWindow</span><span class="params">(QWidget *parent = <span class="literal">nullptr</span>)</span></span>;</span><br><span class="line">    ~<span class="built_in">MainWindow</span>();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">MyMQTTSubscribe</span><span class="params">(QString)</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">MyMQTTSendMessage</span><span class="params">(<span class="type">const</span> QString, <span class="type">const</span> QString)</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> slots:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">brokerConnected</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">updateLogStateChange</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">brokerDisconnected</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">receiveMess</span><span class="params">(<span class="type">const</span> QByteArray &amp;, <span class="type">const</span> QMqttTopicName &amp;)</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> slots:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">on_pushButton_clicked</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">on_pushButton_2_clicked</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    Ui::MainWindow *ui;</span><br><span class="line">    QMqttClient*m_client;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span> <span class="comment">// MAINWINDOW_H</span></span></span><br></pre></td></tr></table></figure>
+
+<h4 id="cpp"><a href="#cpp" class="headerlink" title=".cpp"></a>.cpp</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;mainwindow.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;ui_mainwindow.h&quot;</span></span></span><br><span class="line"></span><br><span class="line">MainWindow::<span class="built_in">MainWindow</span>(QWidget *parent) :</span><br><span class="line">    <span class="built_in">QMainWindow</span>(parent),</span><br><span class="line">    <span class="built_in">ui</span>(<span class="keyword">new</span> Ui::MainWindow)</span><br><span class="line">&#123;</span><br><span class="line">    ui-&gt;<span class="built_in">setupUi</span>(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">    m_client=<span class="keyword">new</span> QMqttClient;</span><br><span class="line">    m_client-&gt;<span class="built_in">setHostname</span>(<span class="string">&quot;127.0.0.1&quot;</span>);</span><br><span class="line">    m_client-&gt;<span class="built_in">setPort</span>(<span class="number">1883</span>);</span><br><span class="line">    m_client-&gt;<span class="built_in">connectToHost</span>();</span><br><span class="line"></span><br><span class="line">    <span class="built_in">connect</span>(m_client,&amp;QMqttClient::connected,<span class="keyword">this</span>,&amp;MainWindow::brokerConnected);</span><br><span class="line">    <span class="built_in">connect</span>(m_client, &amp;QMqttClient::stateChanged, <span class="keyword">this</span>, &amp;MainWindow::updateLogStateChange);</span><br><span class="line">    <span class="built_in">connect</span>(m_client, &amp;QMqttClient::disconnected, <span class="keyword">this</span>, &amp;MainWindow::brokerDisconnected);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">connect</span>(m_client, &amp;QMqttClient::pingResponseReceived, <span class="keyword">this</span>, []() &#123;</span><br><span class="line">            <span class="type">const</span> QString content = QDateTime::<span class="built_in">currentDateTime</span>().<span class="built_in">toString</span>()</span><br><span class="line">                        + <span class="built_in">QLatin1String</span>(<span class="string">&quot; PingResponse&quot;</span>)</span><br><span class="line">                        + <span class="built_in">QLatin1Char</span>(<span class="string">&#x27;\n&#x27;</span>);</span><br><span class="line">            <span class="built_in">qDebug</span>() &lt;&lt; content;</span><br><span class="line">        &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">MainWindow::~<span class="built_in">MainWindow</span>()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">delete</span> ui;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MainWindow::updateLogStateChange</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">const</span> QString content = QDateTime::<span class="built_in">currentDateTime</span>().<span class="built_in">toString</span>()</span><br><span class="line">                    + <span class="built_in">QLatin1String</span>(<span class="string">&quot;: State Change&quot;</span>)</span><br><span class="line">                    + QString::<span class="built_in">number</span>(m_client-&gt;<span class="built_in">state</span>())</span><br><span class="line">                    + <span class="built_in">QLatin1Char</span>(<span class="string">&#x27;\n&#x27;</span>);</span><br><span class="line">    <span class="built_in">qDebug</span>() &lt;&lt; content;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MainWindow::brokerConnected</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;Connected!&quot;</span>;</span><br><span class="line">    <span class="keyword">if</span>(m_client-&gt;<span class="built_in">state</span>() == QMqttClient::Connected)&#123;</span><br><span class="line">        <span class="comment">//m_client-&gt;subscribe(QString(MQTT_AUTO_TOPIC), 0);</span></span><br><span class="line">        <span class="built_in">connect</span>(m_client, <span class="built_in">SIGNAL</span>(<span class="built_in">messageReceived</span>(QByteArray,QMqttTopicName)), <span class="keyword">this</span>, <span class="built_in">SLOT</span>(<span class="built_in">receiveMess</span>(QByteArray,QMqttTopicName)));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MainWindow::brokerDisconnected</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;Disconnected!&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MainWindow::receiveMess</span><span class="params">(<span class="type">const</span> QByteArray &amp;message, <span class="type">const</span> QMqttTopicName &amp;topic)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   QString content;</span><br><span class="line">   content = QDateTime::<span class="built_in">currentDateTime</span>().<span class="built_in">toString</span>() + <span class="built_in">QLatin1Char</span>(<span class="string">&#x27;\n&#x27;</span>);</span><br><span class="line">   content += <span class="built_in">QLatin1String</span>(<span class="string">&quot; Received Topic: &quot;</span>) + topic.<span class="built_in">name</span>() + <span class="built_in">QLatin1Char</span>(<span class="string">&#x27;\n&#x27;</span>);</span><br><span class="line">   content += <span class="built_in">QLatin1String</span>(<span class="string">&quot; Message: &quot;</span>) + message + <span class="built_in">QLatin1Char</span>(<span class="string">&#x27;\n&#x27;</span>);</span><br><span class="line">   <span class="built_in">qDebug</span>() &lt;&lt; content;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MainWindow::MyMQTTSubscribe</span><span class="params">(QString str)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> subscription = m_client-&gt;<span class="built_in">subscribe</span>(str, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (!subscription) &#123;</span><br><span class="line">        <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;Could not subscribe. Is there a valid connection?&quot;</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MainWindow::MyMQTTSendMessage</span><span class="params">(<span class="type">const</span> QString topic, <span class="type">const</span> QString message)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (m_client-&gt;<span class="built_in">publish</span>(topic, message.<span class="built_in">toUtf8</span>()) == <span class="number">-1</span>)&#123;</span><br><span class="line">        <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;Could not publish message&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MainWindow::on_pushButton_clicked</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (m_client-&gt;<span class="built_in">state</span>() == QMqttClient::Disconnected)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot; not  connect&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">MyMQTTSubscribe</span>(<span class="string">&quot;11&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MainWindow::on_pushButton_2_clicked</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">MyMQTTSendMessage</span>(<span class="string">&quot;12&quot;</span>,<span class="string">&quot;world&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/03/11/Qt/qss/" rel="prev" title="qss">
+                  <i class="fa fa-chevron-left"></i> qss
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/04/23/CUDA/cuda%E7%BC%96%E7%A8%8B/" rel="next" title="cuda编程">
+                  cuda编程 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小袁</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

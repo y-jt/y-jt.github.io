@@ -27,11 +27,17 @@
 <meta property="og:site_name" content="得鹿梦鱼">
 <meta property="og:description" content="git的简单使用，如何克隆、上传、创建分支、合并以及常见指令。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2023/03/13/%E6%95%99%E7%A8%8B/git%E7%9A%84%E4%BD%BF%E7%94%A8/1709802362282.png">
+<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2023/03/13/%E6%95%99%E7%A8%8B/git%E7%9A%84%E4%BD%BF%E7%94%A8/1709802316270.png">
+<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2023/03/13/%E6%95%99%E7%A8%8B/git%E7%9A%84%E4%BD%BF%E7%94%A8/1709802642006.png">
+<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2023/03/13/%E6%95%99%E7%A8%8B/git%E7%9A%84%E4%BD%BF%E7%94%A8/1709802901226.png">
+<meta property="og:image" content="https://github.com/y-jt/y-jt.github.io/2023/03/13/%E6%95%99%E7%A8%8B/git%E7%9A%84%E4%BD%BF%E7%94%A8/1709803159053.png">
 <meta property="article:published_time" content="2023-03-13T08:49:08.000Z">
-<meta property="article:modified_time" content="2023-05-17T09:44:57.325Z">
+<meta property="article:modified_time" content="2024-03-12T02:31:38.891Z">
 <meta property="article:author" content="小袁">
 <meta property="article:tag" content="git">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/y-jt/y-jt.github.io/2023/03/13/%E6%95%99%E7%A8%8B/git%E7%9A%84%E4%BD%BF%E7%94%A8/1709802362282.png">
 
 
 <link rel="canonical" href="https://github.com/y-jt/y-jt.github.io/2023/03/13/%E6%95%99%E7%A8%8B/git%E7%9A%84%E4%BD%BF%E7%94%A8/">
@@ -143,7 +149,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E4%BC%A0%E7%9A%84%E7%AE%80%E5%8D%95%E6%B5%81%E7%A8%8B%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">上传的简单流程：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-commit%E6%97%B6%E6%8A%A5Author-identity-unknown%E9%94%99%E8%AF%AF"><span class="nav-number">2.</span> <span class="nav-text">git commit时报Author identity unknown错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git%E5%91%BD%E4%BB%A4"><span class="nav-number">3.</span> <span class="nav-text">git命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E3%80%81%E6%B7%BB%E5%8A%A0%E3%80%81%E6%8F%90%E4%BA%A4%E3%80%81%E5%88%A0%E9%99%A4%E3%80%81%E6%89%BE%E5%9B%9E%EF%BC%8C%E9%87%8D%E7%BD%AE%E4%BF%AE%E6%94%B9%E6%96%87"><span class="nav-number">3.1.</span> <span class="nav-text">查看、添加、提交、删除、找回，重置修改文</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6diff"><span class="nav-number">3.1.1.</span> <span class="nav-text">查看文件diff</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%8F%90%E4%BA%A4%E8%AE%B0%E5%BD%95"><span class="nav-number">3.1.2.</span> <span class="nav-text">查看提交记录</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Git-%E6%9C%AC%E5%9C%B0%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86"><span class="nav-number">3.2.</span> <span class="nav-text">Git 本地分支管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E3%80%81%E5%88%87%E6%8D%A2%E3%80%81%E5%88%9B%E5%BB%BA%E5%92%8C%E5%88%A0%E9%99%A4%E5%88%86%E6%94%AF"><span class="nav-number">3.2.1.</span> <span class="nav-text">查看、切换、创建和删除分支</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E6%94%AF%E5%90%88%E5%B9%B6%E5%92%8Creba"><span class="nav-number">3.2.2.</span> <span class="nav-text">分支合并和reba</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Git%E8%A1%A5%E4%B8%81%E7%AE%A1%E7%90%86-%E6%96%B9%E4%BE%BF%E5%9C%A8%E5%A4%9A%E5%8F%B0%E6%9C%BA%E5%99%A8%E4%B8%8A%E5%BC%80%E5%8F%91%E5%90%8C%E6%AD%A5%E6%97%B6%E7%94%A8"><span class="nav-number">3.2.3.</span> <span class="nav-text">Git补丁管理(方便在多台机器上开发同步时用)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Git%E6%9A%82%E5%AD%98%E7%AE%A1"><span class="nav-number">3.2.4.</span> <span class="nav-text">Git暂存管</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Git%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86"><span class="nav-number">3.2.5.</span> <span class="nav-text">Git远程分支管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#git-push-push%E6%89%80%E6%9C%89%E5%88%86%E6%94%AF"><span class="nav-number">3.2.6.</span> <span class="nav-text">git push # push所有分支</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Git%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E7%AE%A1"><span class="nav-number">3.2.7.</span> <span class="nav-text">Git远程仓库管</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="nav-number">3.2.8.</span> <span class="nav-text">创建远程仓库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B9%9F%E5%8F%AF%E4%BB%A5%E5%91%BD%E4%BB%A4%E8%AE%BE%E7%BD%AE%E8%B7%9F%E8%B8%AA%E8%BF%9C%E7%A8%8B%E5%BA%93%E5%92%8C%E6%9C%AC%E5%9C%B0%E5%BA%93"><span class="nav-number">3.2.9.</span> <span class="nav-text">也可以命令设置跟踪远程库和本地库</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E4%BC%A0%E7%9A%84%E7%AE%80%E5%8D%95%E6%B5%81%E7%A8%8B%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">上传的简单流程：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-commit%E6%97%B6%E6%8A%A5Author-identity-unknown%E9%94%99%E8%AF%AF"><span class="nav-number">2.</span> <span class="nav-text">git commit时报Author identity unknown错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git%E5%91%BD%E4%BB%A4"><span class="nav-number">3.</span> <span class="nav-text">git命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E3%80%81%E6%B7%BB%E5%8A%A0%E3%80%81%E6%8F%90%E4%BA%A4%E3%80%81%E5%88%A0%E9%99%A4%E3%80%81%E6%89%BE%E5%9B%9E%EF%BC%8C%E9%87%8D%E7%BD%AE%E4%BF%AE%E6%94%B9%E6%96%87"><span class="nav-number">3.1.</span> <span class="nav-text">查看、添加、提交、删除、找回，重置修改文</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%96%87%E4%BB%B6diff"><span class="nav-number">3.1.1.</span> <span class="nav-text">查看文件diff</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%8F%90%E4%BA%A4%E8%AE%B0%E5%BD%95"><span class="nav-number">3.1.2.</span> <span class="nav-text">查看提交记录</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Git-%E6%9C%AC%E5%9C%B0%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86"><span class="nav-number">3.2.</span> <span class="nav-text">Git 本地分支管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E3%80%81%E5%88%87%E6%8D%A2%E3%80%81%E5%88%9B%E5%BB%BA%E5%92%8C%E5%88%A0%E9%99%A4%E5%88%86%E6%94%AF"><span class="nav-number">3.2.1.</span> <span class="nav-text">查看、切换、创建和删除分支</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E6%94%AF%E5%90%88%E5%B9%B6%E5%92%8Creba"><span class="nav-number">3.2.2.</span> <span class="nav-text">分支合并和reba</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Git%E8%A1%A5%E4%B8%81%E7%AE%A1%E7%90%86-%E6%96%B9%E4%BE%BF%E5%9C%A8%E5%A4%9A%E5%8F%B0%E6%9C%BA%E5%99%A8%E4%B8%8A%E5%BC%80%E5%8F%91%E5%90%8C%E6%AD%A5%E6%97%B6%E7%94%A8"><span class="nav-number">3.2.3.</span> <span class="nav-text">Git补丁管理(方便在多台机器上开发同步时用)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Git%E6%9A%82%E5%AD%98%E7%AE%A1"><span class="nav-number">3.2.4.</span> <span class="nav-text">Git暂存管</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Git%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86"><span class="nav-number">3.2.5.</span> <span class="nav-text">Git远程分支管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#git-push-push%E6%89%80%E6%9C%89%E5%88%86%E6%94%AF"><span class="nav-number">3.2.6.</span> <span class="nav-text">git push # push所有分支</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Git%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93%E7%AE%A1"><span class="nav-number">3.2.7.</span> <span class="nav-text">Git远程仓库管</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="nav-number">3.2.8.</span> <span class="nav-text">创建远程仓库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B9%9F%E5%8F%AF%E4%BB%A5%E5%91%BD%E4%BB%A4%E8%AE%BE%E7%BD%AE%E8%B7%9F%E8%B8%AA%E8%BF%9C%E7%A8%8B%E5%BA%93%E5%92%8C%E6%9C%AC%E5%9C%B0%E5%BA%93"><span class="nav-number">3.2.9.</span> <span class="nav-text">也可以命令设置跟踪远程库和本地库</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git%E6%9C%AC%E5%9C%B0%E4%BD%BF%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">git本地使用</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -158,18 +164,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">26</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">33</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -263,7 +269,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-05-17 17:44:57" itemprop="dateModified" datetime="2023-05-17T17:44:57+08:00">2023-05-17</time>
+      <time title="修改时间：2024-03-12 10:31:38" itemprop="dateModified" datetime="2024-03-12T10:31:38+08:00">2024-03-12</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -322,6 +328,68 @@
 
 <h4 id="也可以命令设置跟踪远程库和本地库"><a href="#也可以命令设置跟踪远程库和本地库" class="headerlink" title="也可以命令设置跟踪远程库和本地库"></a>也可以命令设置跟踪远程库和本地库</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git branch --set-upstream master origin/master</span><br><span class="line"></span><br><span class="line">git branch --set-upstream develop origin/develop</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
+<h2 id="git本地使用"><a href="#git本地使用" class="headerlink" title="git本地使用"></a>git本地使用</h2><blockquote>
+<p>打开git –&gt; cd到目标文件夹 –&gt; git init生成本地仓库 git add 文件名.文件类型(添加文件)</p>
+<p>git add .添加当前文件夹下的所有文件</p>
+</blockquote>
+<p>git commit -m&lt;&gt;  提交记录</p>
+<p>git branch &lt;分支名&gt;	创建分支</p>
+<p>git checkout &lt;分支名&gt;	切换分支（移动的是哈希值类似句柄）</p>
+<p>git merge &lt;其他分支&gt;	将其他分支合并到当前分支</p>
+<p>git rebase &lt;其他分支&gt;	将当前分支合并到其他分支上</p>
+<p>git log查看提交哈希记录</p>
+<p>git branch -f&lt;分支名&gt; &lt;位置&gt;，将分支强行移动到指定位置，位置可以是HEAD(当前哈希值位置),可以是提交哈希记录</p>
+<p>git checkout ~n，向上移动n步</p>
+<p>git checkout &lt;分支名&gt;~~	从这个分支开始向上移动2个</p>
+<p>git reset&lt;位置&gt; 撤销更改</p>
+<p>git revert&lt;位置&gt;	撤销并commit新的</p>
+<p>git cherry-pick &lt;位置&gt; &lt;位置&gt;,	将多个commit节点，合并到当前位置下按顺序排列</p>
+<p>git rebase -i HEAD~n,	从当前位置开始向上回溯n个位置，并根据窗口选择顺序和排除情况，重新生成分支</p>
+<p>git status   &#x2F;&#x2F;查看缓存区</p>
+<blockquote>
+<p>在git目录下新建.gitignore文件，写入目录结构，忽略指定目录或文件</p>
+<p>写入	pycache&#x2F;	表示忽略这个文件夹</p>
+<blockquote>
+<p>git init	&#x2F;&#x2F;当前文件夹下初始化一个空git仓库</p>
+<p>更改.gitignore文件或者.git&#x2F;info&#x2F;exclude文件排除不想跟踪的文件或文件夹</p>
+</blockquote>
+<blockquote>
+<p>git status	&#x2F;&#x2F;输出1位于那个分支2提交信息3未被跟踪的文件(红色)4添加了那些到当前将要提交中<br><img src="1709802362282.png" alt="1709802362282"></p>
+</blockquote>
+<blockquote>
+<p>git add .后git status	将所有未被跟踪文件添加到当前将要提交中<br>git rm –cached &lt;文件&gt;	将指定文件从当前将要提交中排除</p>
+</blockquote>
+<blockquote>
+<p>git commit -m “···”	将当前将要提交全部提交，引号中的为提交记录</p>
+<p>输出：1.表明在那个分支上进行提交，那些文件被修改了<br><img src="1709802316270.png" alt="1709802316270"></p>
+</blockquote>
+<blockquote>
+<p>提交后再git status	表明工作目录都是干净的，没有未被提交的，本次的修改都被提交<br><img src="1709802642006.png" alt="1709802642006"></p>
+</blockquote>
+<blockquote>
+<p>git log	提交的ID，那个分支，作者 日期 提交记录<br>git log –pretty&#x3D;oneline	只输出id和提交记录</p>
+<p><img src="1709802901226.png" alt="1709802901226"></p>
+</blockquote>
+<blockquote>
+<p>修改文件夹下的文件后，在git status	分支，那个文件被修改，没有add到工作区和commit提交<br><img src="1709803159053.png" alt="1709803159053"></p>
+</blockquote>
+<blockquote>
+<p>git commit -am “Extended greeting.”	-a将仓库中所有被修改的文件都一起提交，如果添加了新文件先git add</p>
+</blockquote>
+<blockquote>
+<p>git checkout .	撤销自最后一次提交后的所有修改<br>git checkout id前6个字符	head离开当前分支，指向之前的提交记录<br>git reset –hard id前6字符	永久恢复到指定分支，并舍弃从那以后的所有修改。</p>
+</blockquote>
+<blockquote>
+<p>版本管理混乱后，可以git status查看是否有未提交的吗，没有就直接rmdir .git删除仓库重新建。<br>！！！切记不要随便删除分支！！！</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>git branch <new_branch> # 创建新的分支</new_branch></p>
+<p>git branch -v # 查看各个分支最后提交信息</p>
+<p>git checkout <branch> # 切换到某个分支</branch></p>
+</blockquote>
+</blockquote>
 
     </div>
 
@@ -366,7 +434,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
