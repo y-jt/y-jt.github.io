@@ -28,7 +28,7 @@
 <meta property="og:description" content="halcon使用过程中，常用算子。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-08-15T09:04:33.000Z">
-<meta property="article:modified_time" content="2024-11-19T03:14:11.210Z">
+<meta property="article:modified_time" content="2025-09-22T02:29:47.163Z">
 <meta property="article:author" content="小袁">
 <meta property="article:tag" content="-halcon -cv">
 <meta name="twitter:card" content="summary">
@@ -143,7 +143,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-%E6%95%B0%E7%BB%84tuple"><span class="nav-number">1.</span> <span class="nav-text">1.数组tuple</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-%E6%95%B0%E7%BB%84tuple"><span class="nav-number">1.</span> <span class="nav-text">1.数组tuple</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#halcon%E9%80%9A%E8%BF%87%E9%BC%A0%E6%A0%87%E8%A3%81%E5%9B%BE"><span class="nav-number"></span> <span class="nav-text">halcon通过鼠标裁图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#end-Bug"><span class="nav-number"></span> <span class="nav-text">end_Bug</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-read-image%E8%B7%AF%E5%BE%84%E6%9C%89%E4%B8%AD%E6%96%87"><span class="nav-number"></span> <span class="nav-text">1.read_image路径有中文</span></a></div>
         </div>
         <!--/noindex-->
 
@@ -158,7 +158,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-count">42</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -263,7 +263,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-11-19 11:14:11" itemprop="dateModified" datetime="2024-11-19T11:14:11+08:00">2024-11-19</time>
+      <time title="修改时间：2025-09-22 10:29:47" itemprop="dateModified" datetime="2025-09-22T10:29:47+08:00">2025-09-22</time>
     </span>
 
   
@@ -279,7 +279,7 @@
         <p>halcon使用过程中，常用算子。</p>
 <span id="more"></span>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">rgb1_to_gray	彩色图转灰度</span><br><span class="line">erosion		腐蚀</span><br><span class="line">dilation	膨胀</span><br><span class="line">gen_rectangle1		生成矩形</span><br><span class="line">closing		闭操作</span><br><span class="line">opening</span><br><span class="line">reduce_domain 	从原图上裁剪特征区域（图片实际大小不变，roi外区域黑色填充）</span><br><span class="line">crop_domain		从原图上裁剪特征区域（只保留裁剪区域）</span><br><span class="line">fill_up		填充区域</span><br><span class="line">union2		将两个特征区域合并</span><br><span class="line">connection		将特征区域分割开</span><br><span class="line">boundary	区域边界</span><br><span class="line">gen_contour_region_xld	将region转为xld</span><br><span class="line">get_contour_xld		得到xld的所有点</span><br><span class="line">intensity	得到区域内像素的均值以及方差</span><br><span class="line">min_max_gray	得到区域内像素的最大最小值</span><br><span class="line">image_to_channels	通道分离</span><br><span class="line">dev_get_window		返回活动窗口的句柄</span><br><span class="line">draw_rectangle1		在窗口上通过鼠标左键画roi，右键结束</span><br><span class="line">zoom_image_factor		缩放图像</span><br><span class="line">fill_up_shape		填充region中的空洞</span><br><span class="line">scale_image			线性变换</span><br><span class="line">complement			区域取反</span><br><span class="line">paint_region		区域填充</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">rgb1_to_gray	彩色图转灰度</span><br><span class="line">erosion		腐蚀</span><br><span class="line">dilation	膨胀</span><br><span class="line">gen_rectangle1		生成矩形</span><br><span class="line">closing		闭操作</span><br><span class="line">opening</span><br><span class="line">reduce_domain 	从原图上裁剪特征区域（图片实际大小不变，roi外区域黑色填充）</span><br><span class="line">crop_domain		从原图上裁剪特征区域（只保留裁剪区域）</span><br><span class="line">fill_up		填充区域</span><br><span class="line">union2		将两个特征区域合并</span><br><span class="line">connection		将特征区域分割开</span><br><span class="line">boundary	区域边界</span><br><span class="line">gen_contour_region_xld	将region转为xld</span><br><span class="line">get_contour_xld		得到xld的所有点</span><br><span class="line">intensity	得到区域内像素的均值以及方差</span><br><span class="line">min_max_gray	得到区域内像素的最大最小值</span><br><span class="line">image_to_channels	通道分离</span><br><span class="line">dev_get_window		返回活动窗口的句柄</span><br><span class="line">draw_rectangle1		在窗口上通过鼠标左键画roi，右键结束</span><br><span class="line">zoom_image_factor		缩放图像</span><br><span class="line">fill_up_shape		填充region中的空洞</span><br><span class="line">scale_image			线性变换</span><br><span class="line">complement			区域取反</span><br><span class="line">paint_region		区域填充</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">read_image</span> (z, <span class="string">&#x27;D:/1work/1temp/3D/Project1/Project1/test_outdepth.tif&#x27;</span>)</span><br><span class="line"><span class="built_in">read_image</span> (x, <span class="string">&#x27;D:/1work/1temp/3D/Project1/Project1/test_outdepthx.tif&#x27;</span>)</span><br><span class="line"><span class="built_in">read_image</span> (y, <span class="string">&#x27;D:/1work/1temp/3D/Project1/Project1/test_outdepthy.tif&#x27;</span>)</span><br><span class="line"><span class="built_in">xyz_to_object_model_3d</span> (x, y, z, ObjectModel3D)</span><br><span class="line"></span><br><span class="line"><span class="built_in">write_object_model_3d</span> (ObjectModel3D, <span class="string">&#x27;ply&#x27;</span>, <span class="string">&#x27;D:/1work/1temp/3D/Project1/Project1/test_outdepthy.ply&#x27;</span>, [], [])</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -291,8 +291,12 @@
 
 
 
-<p>halcon通过鼠标裁图</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">read_image (Image4012, &#x27;D:/1工作/qtgd/标签/tesseract_opencv/tesseract_opencv/input/5/4042.jpg&#x27;)</span><br><span class="line">dev_get_window (WindowHandle)</span><br><span class="line">draw_rectangle1 (WindowHandle, Row1, Column1, Row2, Column2)</span><br><span class="line">gen_rectangle1 (Rectangle, Row1, Column1, Row2, Column2)</span><br><span class="line">reduce_domain (Image4012, Rectangle, ImageReduced)</span><br><span class="line">crop_domain (ImageReduced, ImagePart)</span><br><span class="line">zoom_image_factor (ImagePart, ImageZoomed, 5, 5, &#x27;constant&#x27;)</span><br><span class="line">rgb1_to_gray (ImageZoomed, GrayImage)</span><br><span class="line">write_image (GrayImage, &#x27;bmp&#x27;, 0, &#x27;D:/1工作/qtgd/标签/tesseract_opencv/tesseract_opencv/input/3/Temp1.bmp&#x27;)</span><br></pre></td></tr></table></figure>
+<h3 id="halcon通过鼠标裁图"><a href="#halcon通过鼠标裁图" class="headerlink" title="halcon通过鼠标裁图"></a>halcon通过鼠标裁图</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">read_image (Image4012, &#x27;D:/1工作/qtgd/标签/tesseract_opencv/tesseract_opencv/input/5/4042.jpg&#x27;)</span><br><span class="line">dev_get_window (WindowHandle)</span><br><span class="line">draw_rectangle1 (WindowHandle, Row1, Column1, Row2, Column2)</span><br><span class="line">gen_rectangle1 (Rectangle, Row1, Column1, Row2, Column2)</span><br><span class="line">reduce_domain (Image4012, Rectangle, ImageReduced)</span><br><span class="line">crop_domain (ImageReduced, ImagePart)</span><br><span class="line">zoom_image_factor (ImagePart, ImageZoomed, 5, 5, &#x27;constant&#x27;)</span><br><span class="line">rgb1_to_gray (ImageZoomed, GrayImage)</span><br><span class="line">write_image (GrayImage, &#x27;bmp&#x27;, 0, &#x27;D:/1工作/qtgd/标签/tesseract_opencv/tesseract_opencv/input/3/Temp1.bmp&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>halconC++设置显示字体和大小</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">HTuple font, FontWithSize;</span><br><span class="line"><span class="built_in">QueryFont</span>(m_hWindow, &amp;font);</span><br><span class="line"><span class="comment">//-System-200*-*-0-0-0-1-GB2312_CHARSET-</span></span><br><span class="line">FontWithSize = <span class="string">&quot;-System-&quot;</span> + size;</span><br><span class="line">FontWithSize = FontWithSize + <span class="string">&quot;*-*-0-0-0-1-GB2312_CHARSET-&quot;</span>;</span><br><span class="line"><span class="built_in">SetFont</span>(m_hWindow, FontWithSize);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">SetTposition</span>(m_hWindow, row, col);</span><br><span class="line"><span class="built_in">SetColor</span>(m_hWindow, hvColor);</span><br><span class="line"><span class="built_in">WriteString</span>(m_hWindow, hvInfo);</span><br></pre></td></tr></table></figure>
+
+<h2 id="end-Bug"><a href="#end-Bug" class="headerlink" title="end_Bug"></a>end_Bug</h2><h3 id="1-read-image路径有中文"><a href="#1-read-image路径有中文" class="headerlink" title="1.read_image路径有中文"></a>1.read_image路径有中文</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//READ_IAMGE前面加上</span></span><br><span class="line"><span class="built_in">SetHcppInterfaceStringEncodingIsUtf8</span>(<span class="literal">false</span>);</span><br></pre></td></tr></table></figure>
 
 
     </div>
@@ -338,7 +342,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2026</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
