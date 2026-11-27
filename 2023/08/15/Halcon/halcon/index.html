@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="halcon使用过程中，常用算子。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="halcon">
+<meta property="og:url" content="https://github.com/y-jt/y-jt.github.io/2023/08/15/Halcon/halcon/index.html">
+<meta property="og:site_name" content="得鹿梦鱼">
+<meta property="og:description" content="halcon使用过程中，常用算子。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-08-15T09:04:33.000Z">
+<meta property="article:modified_time" content="2026-09-22T03:15:28.155Z">
+<meta property="article:author" content="小袁">
+<meta property="article:tag" content="-halcon -cv">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://github.com/y-jt/y-jt.github.io/2023/08/15/Halcon/halcon/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://github.com/y-jt/y-jt.github.io/2023/08/15/Halcon/halcon/","path":"2023/08/15/Halcon/halcon/","title":"halcon"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>halcon | 得鹿梦鱼</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">得鹿梦鱼</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-%E6%95%B0%E7%BB%84tuple"><span class="nav-number">1.</span> <span class="nav-text">1.数组tuple</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#halcon%E9%80%9A%E8%BF%87%E9%BC%A0%E6%A0%87%E8%A3%81%E5%9B%BE"><span class="nav-number"></span> <span class="nav-text">halcon通过鼠标裁图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#end-Bug"><span class="nav-number"></span> <span class="nav-text">end_Bug</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-read-image%E8%B7%AF%E5%BE%84%E6%9C%89%E4%B8%AD%E6%96%87"><span class="nav-number"></span> <span class="nav-text">1.read_image路径有中文</span></a></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="小袁"
+      src="/images/1.png">
+  <p class="site-author-name" itemprop="name">小袁</p>
+  <div class="site-description" itemprop="description">笔记是记忆的痕迹</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">26</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">36</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/y-jt" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;y-jt"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-globe fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.apiref.com/" title="https:&#x2F;&#x2F;www.apiref.com&#x2F;" rel="noopener" target="_blank">编程API手册</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://labs.openai.com/" title="https:&#x2F;&#x2F;labs.openai.com&#x2F;" rel="noopener" target="_blank">AI绘图</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://github.com/y-jt/y-jt.github.io/2023/08/15/Halcon/halcon/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/1.png">
+      <meta itemprop="name" content="小袁">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="得鹿梦鱼">
+      <meta itemprop="description" content="笔记是记忆的痕迹">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="halcon | 得鹿梦鱼">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          halcon
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-08-15 17:04:33" itemprop="dateCreated datePublished" datetime="2023-08-15T17:04:33+08:00">2023-08-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-09-22 11:15:28" itemprop="dateModified" datetime="2026-09-22T11:15:28+08:00">2026-09-22</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>halcon使用过程中，常用算子。</p>
+<span id="more"></span>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//github搜素fircfiles，halcon.md文件获取对应版本的破解dll</span></span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">rgb1_to_gray	彩色图转灰度</span><br><span class="line">erosion		腐蚀</span><br><span class="line">dilation	膨胀</span><br><span class="line">gen_rectangle1		生成矩形</span><br><span class="line">closing		闭操作</span><br><span class="line">opening</span><br><span class="line">reduce_domain 	从原图上裁剪特征区域（图片实际大小不变，roi外区域黑色填充）</span><br><span class="line">crop_domain		从原图上裁剪特征区域（只保留裁剪区域）</span><br><span class="line">fill_up		填充区域</span><br><span class="line">union2		将两个特征区域合并</span><br><span class="line">connection		将特征区域分割开</span><br><span class="line">boundary	区域边界</span><br><span class="line">gen_contour_region_xld	将region转为xld</span><br><span class="line">get_contour_xld		得到xld的所有点</span><br><span class="line">intensity	得到区域内像素的均值以及方差</span><br><span class="line">min_max_gray	得到区域内像素的最大最小值</span><br><span class="line">image_to_channels	通道分离</span><br><span class="line">dev_get_window		返回活动窗口的句柄</span><br><span class="line">draw_rectangle1		在窗口上通过鼠标左键画roi，右键结束</span><br><span class="line">zoom_image_factor		缩放图像</span><br><span class="line">fill_up_shape		填充region中的空洞</span><br><span class="line">scale_image			线性变换</span><br><span class="line">complement			区域取反</span><br><span class="line">paint_region		区域填充</span><br><span class="line"><span class="built_in">shape_trans</span> (RegionErosion1, RegionTrans, <span class="string">&#x27;inner_rectangle1&#x27;</span>)<span class="comment">//区域最小内接矩形</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">read_image</span> (z, <span class="string">&#x27;D:/1work/1temp/3D/Project1/Project1/test_outdepth.tif&#x27;</span>)</span><br><span class="line"><span class="built_in">read_image</span> (x, <span class="string">&#x27;D:/1work/1temp/3D/Project1/Project1/test_outdepthx.tif&#x27;</span>)</span><br><span class="line"><span class="built_in">read_image</span> (y, <span class="string">&#x27;D:/1work/1temp/3D/Project1/Project1/test_outdepthy.tif&#x27;</span>)</span><br><span class="line"><span class="built_in">xyz_to_object_model_3d</span> (x, y, z, ObjectModel3D)</span><br><span class="line"></span><br><span class="line"><span class="built_in">write_object_model_3d</span> (ObjectModel3D, <span class="string">&#x27;ply&#x27;</span>, <span class="string">&#x27;D:/1work/1temp/3D/Project1/Project1/test_outdepthy.ply&#x27;</span>, [], [])</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="1-数组tuple"><a href="#1-数组tuple" class="headerlink" title="1.数组tuple"></a>1.数组tuple</h6><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">数组的初始化</span><br><span class="line">A：=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>] </span><br><span class="line">定义空数组，逐渐追加元素</span><br><span class="line">A :=[ ]</span><br><span class="line"><span class="keyword">for</span> i :=<span class="number">0</span> to <span class="number">4</span> by <span class="number">1</span></span><br><span class="line">      A:= [A,i]</span><br><span class="line">endfor</span><br><span class="line">连接两个tuple数组到第三个tuple中</span><br><span class="line">tuple1[<span class="number">0</span>] := <span class="number">1</span></span><br><span class="line">tuple2[<span class="number">0</span>] := <span class="number">3</span></span><br><span class="line"><span class="built_in">tuple_concat</span>(Tump0,Tump1, Concat)</span><br><span class="line">返回一个随机数tuple数组，数值分布在[<span class="number">0</span>,<span class="number">1</span>)之间</span><br><span class="line"><span class="built_in">tuple_rand</span>(<span class="number">5</span>,tmp)</span><br><span class="line">生成一个指定长度和初始化值的数组</span><br><span class="line"><span class="built_in">tuple_gen_const</span>(<span class="number">5</span>, <span class="number">100</span>, Result )</span><br><span class="line">初始化数组，指定开始值，终止值，步长，得到sequence</span><br><span class="line"><span class="built_in">tuple_gen_sequence</span> (<span class="number">1</span>, <span class="number">20</span>, <span class="number">2</span>, Sequence)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">数组特征：</span><br><span class="line"><span class="built_in">tuple_max</span>(Array,Max)          求数组元素的最大值  </span><br><span class="line"><span class="built_in">tuple_min</span>(Array,Min)          求数组元素的最小值</span><br><span class="line"><span class="built_in">tuple_mean</span>(Array,Mean)        求数组元素的平均值</span><br><span class="line"><span class="built_in">tuple_median</span>(Array,Mean)      求数组元素的中值</span><br><span class="line"><span class="built_in">tuple_length</span>(Array,Length)    获取数组的长度</span><br><span class="line"><span class="built_in">tuple_abs</span>(Array,Abs)          数组元素的绝对值</span><br><span class="line"><span class="built_in">tuple_Fun</span>(Array,Fun_array )     对数组元素求Function，这里的Fun是一个宏替换，可以是pow，sin，                </span><br><span class="line">                                cos，tan，log等初等函数。也可neg取反，rad转成弧度</span><br><span class="line"><span class="built_in">tuple_deviation</span> (a, Deviation)  返回元组元素的标准差</span><br><span class="line"><span class="built_in">tuple_length</span> (a, Length)      返回元组元素数目</span><br><span class="line"> </span><br><span class="line">数组选择：</span><br><span class="line"><span class="built_in">tuple_find</span>(Array, b, Indices)    返回参数<span class="number">2</span>在参数<span class="number">1</span>中出现的索引，如果没有返回<span class="number">-1</span></span><br><span class="line"><span class="built_in">tuple_first_n</span>(Array, n, Selected)  选择前面的元素，直到索引n，就会返回n+<span class="number">1</span>个元素</span><br><span class="line"><span class="built_in">tuple_last_n</span>(Array, n, Selected1)  选择从索引n开始到元组末尾的所有元素，包含索引n的元素</span><br><span class="line"><span class="built_in">tuple_remove</span>(Array,c,Reduced)      移出指定索引的元素,索引可以是一个数组</span><br><span class="line"><span class="built_in">tuple_select</span>(Array,Index,Selected)   返回指定索引的元素</span><br><span class="line"><span class="built_in">tuple_select_range</span>(Array,Index1,Index2,Selected)  返回指定的起始索引，终止索引区域内的元素</span><br><span class="line"><span class="built_in">tuple_select_rank</span>(Array,Index,Selected)    先升序排序，再返回排序后指定索引的元素</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">对两个数组进行操作，输出一个数组</span><br><span class="line"><span class="built_in">tuple_add</span>(Array1,Array2,Sum)    两个数组相加 </span><br><span class="line"><span class="built_in">tuple_sub</span>(Array1,Array2,Sub)    两个数组相减</span><br><span class="line"><span class="built_in">tuple_and</span>(Array1,Array2,And)    将两个数组元素逻辑与</span><br><span class="line"><span class="built_in">tuple_or</span>(Array1,Array2,Or)      将两个数组元素逻辑或</span><br><span class="line"><span class="built_in">tuple_mult</span>(Array1,Array2, result)   两个数组元素乘积</span><br><span class="line"><span class="built_in">tuple_neg</span>(Array1,Array2)        对所有元素乘以<span class="number">-1</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">切片和序列操作：</span><br><span class="line"><span class="built_in">tuple_select_range</span>(Array,Index1,Index2,ArraySelect)   取一个数组的部分连续值，组成新数组</span><br><span class="line"><span class="built_in">tuple_concat</span>(Array1,Array2,Concat)                    将两个数组相连接 </span><br><span class="line"> </span><br><span class="line">排序操作：</span><br><span class="line"><span class="built_in">tuple_sort</span>(Array,Sorted)          给数组元素升序排序</span><br><span class="line"><span class="built_in">tuple_sort_index</span>(Array,Indexs)    数组排序，返回升序的索引</span><br><span class="line"><span class="built_in">tuple_inverse</span>(Array,Inverted)     反转一个数组</span><br><span class="line"><span class="built_in">tuple_find</span>(Array1,Array2,Indices) 在数组<span class="number">1</span>中寻找数组<span class="number">2</span></span><br><span class="line"> </span><br><span class="line">数组的比较：</span><br><span class="line"><span class="built_in">tuple_equal</span>(Array1,Array2,Equal)  比较两个数组是否相等,返回一个数值</span><br><span class="line"><span class="built_in">tuple_not_equal</span>(Array1,Array2,Equal)  比较两个数组是否相等，返回一个数值</span><br><span class="line"><span class="built_in">tuple_greater</span>(Array1,Array2,Greater)</span><br><span class="line"><span class="built_in">tuple_max2</span>(Array1,Array2,Max2)    比较两个数组的对应元素，取每个大值放于结果中</span><br><span class="line"><span class="built_in">tuple_min2</span>(Array1,Array2,Min2)    比较两个数组的对应元素，取每个小值放于结果中   </span><br><span class="line"> </span><br><span class="line">数组转换：</span><br><span class="line"><span class="built_in">tuple_chr</span>(Array1,Array2)          根据ASCII码将整型元组转换为字符数组</span><br><span class="line"><span class="built_in">tuple_chrt</span>(Array1,Array2)         根据ASCII码将整型元组转换为字符串</span><br><span class="line"><span class="built_in">tuple</span>(b,Int)                      一个元组转换为一个整型元组,小数部分直接抛弃，不四舍五入</span><br><span class="line"><span class="built_in">tuple_real</span>(a, Real)               转换为浮点数</span><br><span class="line"><span class="built_in">tuple_round</span> (b, Round)            转换为整型数,四舍五入</span><br><span class="line"><span class="built_in">tuple_ord</span> (e, Ord)                将长度为<span class="number">1</span>的字符串的元组转换为它们相应的ASCII码元组</span><br><span class="line"><span class="built_in">tuple_ords</span> (f, Ords)              将一个字符串的元组转换为它们ASCII码的元组</span><br><span class="line"><span class="built_in">tuple_string</span> (str1, <span class="string">&#x27;-10.3s&#x27;</span>, str2)</span><br><span class="line">* 转换为字符串</span><br><span class="line">* 参数<span class="number">1</span>：输入</span><br><span class="line">* 参数<span class="number">2</span>：格式</span><br><span class="line">*     数值时：</span><br><span class="line">*       <span class="string">&#x27;10.2f&#x27;</span>   总长度<span class="number">10</span>位，小数点<span class="number">2</span>位   f表示浮点数</span><br><span class="line">*       <span class="string">&#x27;-10.2f&#x27;</span>   -表示左对齐  否则右对齐</span><br><span class="line">*       <span class="string">&#x27;.7f&#x27;</span>     总长度不限，小数点<span class="number">7</span>位</span><br><span class="line">*       <span class="string">&#x27;+10.3f&#x27;</span>   +表示前面加上+-号</span><br><span class="line">*       <span class="string">&#x27;x&#x27;</span>        转化为小写<span class="number">16</span>进制</span><br><span class="line">*       <span class="string">&#x27;X&#x27;</span>        转化为大写<span class="number">16</span>进制</span><br><span class="line">*       <span class="string">&#x27;.8d&#x27;</span>       转化为十进制，总长度<span class="number">8</span>位 </span><br><span class="line">*     字符串时：</span><br><span class="line">*        <span class="string">&#x27;10s&#x27;</span>     转换为总长度<span class="number">10</span>位的字符串</span><br><span class="line">*        <span class="string">&#x27;-10s&#x27;</span>    -表示左对齐  否则右对齐</span><br><span class="line">*        <span class="string">&#x27;-10.3s&#x27;</span>   总长度<span class="number">10</span>位，截取前<span class="number">3</span>个字符</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="halcon通过鼠标裁图"><a href="#halcon通过鼠标裁图" class="headerlink" title="halcon通过鼠标裁图"></a>halcon通过鼠标裁图</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">read_image (Image4012, &#x27;D:/1工作/qtgd/标签/tesseract_opencv/tesseract_opencv/input/5/4042.jpg&#x27;)</span><br><span class="line">dev_get_window (WindowHandle)</span><br><span class="line">draw_rectangle1 (WindowHandle, Row1, Column1, Row2, Column2)</span><br><span class="line">gen_rectangle1 (Rectangle, Row1, Column1, Row2, Column2)</span><br><span class="line">reduce_domain (Image4012, Rectangle, ImageReduced)</span><br><span class="line">crop_domain (ImageReduced, ImagePart)</span><br><span class="line">zoom_image_factor (ImagePart, ImageZoomed, 5, 5, &#x27;constant&#x27;)</span><br><span class="line">rgb1_to_gray (ImageZoomed, GrayImage)</span><br><span class="line">write_image (GrayImage, &#x27;bmp&#x27;, 0, &#x27;D:/1工作/qtgd/标签/tesseract_opencv/tesseract_opencv/input/3/Temp1.bmp&#x27;)</span><br></pre></td></tr></table></figure>
+
+<p>halconC++设置显示字体和大小</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">HTuple font, FontWithSize;</span><br><span class="line"><span class="built_in">QueryFont</span>(m_hWindow, &amp;font);</span><br><span class="line"><span class="comment">//-System-200*-*-0-0-0-1-GB2312_CHARSET-</span></span><br><span class="line">FontWithSize = <span class="string">&quot;-System-&quot;</span> + size;</span><br><span class="line">FontWithSize = FontWithSize + <span class="string">&quot;*-*-0-0-0-1-GB2312_CHARSET-&quot;</span>;</span><br><span class="line"><span class="built_in">SetFont</span>(m_hWindow, FontWithSize);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">SetTposition</span>(m_hWindow, row, col);</span><br><span class="line"><span class="built_in">SetColor</span>(m_hWindow, hvColor);</span><br><span class="line"><span class="built_in">WriteString</span>(m_hWindow, hvInfo);</span><br></pre></td></tr></table></figure>
+
+<h2 id="end-Bug"><a href="#end-Bug" class="headerlink" title="end_Bug"></a>end_Bug</h2><h3 id="1-read-image路径有中文"><a href="#1-read-image路径有中文" class="headerlink" title="1.read_image路径有中文"></a>1.read_image路径有中文</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//READ_IAMGE前面加上</span></span><br><span class="line"><span class="built_in">SetHcppInterfaceStringEncodingIsUtf8</span>(<span class="literal">false</span>);</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/halcon-cv/" rel="tag"># -halcon -cv</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/08/07/MFC/MFC_learn/" rel="prev" title="">
+                  <i class="fa fa-chevron-left"></i> 
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/10/10/demo/C++/url_down/" rel="next" title="url_down">
+                  url_down <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">小袁</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
